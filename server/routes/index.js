@@ -8,6 +8,8 @@ const router = require('express').Router()
 
 // auth routes
 router.post('/merchant/register', AuthController.merchantRegister)
+router.post('/customer/register', AuthController.customerRegister)
+
 // router.post('/login', authController.login)
 // teacher routes
 // router.post('/get-teacher', verifyToken , teacherController.getTeacher)
