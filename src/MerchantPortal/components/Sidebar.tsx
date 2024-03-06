@@ -33,7 +33,10 @@ import {
   FiChevronDown,
 } from 'react-icons/fi'
 import { IconType } from 'react-icons'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useCookies } from 'react-cookie'
+import { CiLogout } from 'react-icons/ci'
 
 interface LinkItemProps {
   name: string
@@ -56,6 +59,8 @@ interface SidebarProps extends BoxProps {
 
 const LinkItems: Array<LinkItemProps> = [
   { name: 'Home', icon: FiHome, link: "/merchant/dashboard" },
+  { name: 'Logout', icon: CiLogout, link: "/merchant/logout" },
+
 ]
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
@@ -196,6 +201,24 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 // }
 const Sidebar = ({ children }: SidebarProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const [cookies] = useCookies();
+  const navigate = useNavigate();
+
+  //@ts-ignore
+  async function checkToken() {
+    const token = await cookies.merchantToken
+    if (!token) {
+      navigate('/merchant/login')
+    } else {
+      // console.log(token)
+    }
+
+  }
+
+  useEffect(() => {
+    // Effect function
+    checkToken()
+  }, []);
 
   return (
     <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>

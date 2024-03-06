@@ -9,7 +9,8 @@ import {
   Input,
   Stack,
   Image,
-  useToast
+  useToast,
+  Spinner
 } from '@chakra-ui/react'
 import { useEffect, useState } from 'react';
 import api from '../utils/api';
@@ -97,6 +98,10 @@ const MerchantLogin = () => {
 
   return (
     <>
+    {loading?(<>
+      <Stack minHeight={'100%'} width={'100%'} alignItems={"center"} justifyContent={"center"} ><Spinner size='xl' /></Stack>
+    </>):(<>
+
       <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
         <Flex p={8} flex={1} align={'center'} justify={'center'}>
           <Stack spacing={4} w={'full'} maxW={'md'}>
@@ -133,6 +138,7 @@ const MerchantLogin = () => {
           />
         </Flex>
       </Stack>
+    </>)}
 
     </>
   )

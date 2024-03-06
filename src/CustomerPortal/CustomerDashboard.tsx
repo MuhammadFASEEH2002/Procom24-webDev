@@ -1,8 +1,15 @@
-import React from 'react'
+import Sidebar from "./components/Sidebar"
+
+
 
 const CustomerDashboard = () => {
   return (
-    <div>CustomerDashboard</div>
+    <>
+    {/* @ts-ignore */}
+    <Sidebar>
+      customer dashboard
+    </Sidebar>
+    </>
   )
 }
 
