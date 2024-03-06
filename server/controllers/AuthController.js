@@ -57,26 +57,26 @@ exports.merchantRegister = async (req, res) => {
             return;
         }
         const hashPassword = await bcrypt.hash(req.body.password, 10);
-       
-            const usernameExist = await Merchant.findOne({ username: req.body.username });
-            const emailExist = await Merchant.findOne({ email: req.body.email });
 
-            const accountnumberExist = await Merchant.findOne({ accountnumber: req.body.accountnumber });
+        const usernameExist = await Merchant.findOne({ username: req.body.username });
+        const emailExist = await Merchant.findOne({ email: req.body.email });
 
-            if (usernameExist || emailExist || accountnumberExist) {
-                res.json({ status: false, message: "Entered credentials are already used" })
-                return;
-            }
+        const accountnumberExist = await Merchant.findOne({ accountnumber: req.body.accountnumber });
 
-            await Merchant.create({
-                username: req.body.username,
-                email: req.body.email,
-                name: req.body.name,
-                bankname: req.body.bankname,
-                accountnumber: req.body.accountnumber,
-                password: hashPassword
-            })
-            res.json({ status: true, message: "user registered" })
+        if (usernameExist || emailExist || accountnumberExist) {
+            res.json({ status: false, message: "Entered credentials are already used" })
+            return;
+        }
+
+        await Merchant.create({
+            username: req.body.username,
+            email: req.body.email,
+            name: req.body.name,
+            bankname: req.body.bankname,
+            accountnumber: req.body.accountnumber,
+            password: hashPassword
+        })
+        res.json({ status: true, message: "user registered" })
     } catch (error) {
         res.json({ status: false, message: error.message })
 
@@ -148,28 +148,79 @@ exports.customerRegister = async (req, res) => {
             return;
         }
         const hashPassword = await bcrypt.hash(req.body.password, 10);
-       
-            const usernameExist = await Customer.findOne({ username: req.body.username });
-            const emailExist = await Customer.findOne({ email: req.body.email });
-            const accountnumberExist = await Customer.findOne({ accountnumber: req.body.accountnumber });
-            const phonenumberExist = await Customer.findOne({ phonenumber: req.body.phonenumber });
-            if (usernameExist || emailExist || accountnumberExist || phonenumberExist) {
-                res.json({ status: false, message: "Entered credentials are already used" })
-                return;
-            }
 
-            await Customer.create({
-                username: req.body.username,
-                email: req.body.email,
-                name: req.body.name,
-                bankname: req.body.bankname,
-                accountnumber: req.body.accountnumber,
-                password: hashPassword,
-                phonenumber: req.body.phonenumber
-            })
-            res.json({ status: true, message: "user registered" })
+        const usernameExist = await Customer.findOne({ username: req.body.username });
+        const emailExist = await Customer.findOne({ email: req.body.email });
+        const accountnumberExist = await Customer.findOne({ accountnumber: req.body.accountnumber });
+        const phonenumberExist = await Customer.findOne({ phonenumber: req.body.phonenumber });
+        if (usernameExist || emailExist || accountnumberExist || phonenumberExist) {
+            res.json({ status: false, message: "Entered credentials are already used" })
+            return;
+        }
+
+        await Customer.create({
+            username: req.body.username,
+            email: req.body.email,
+            name: req.body.name,
+            bankname: req.body.bankname,
+            accountnumber: req.body.accountnumber,
+            password: hashPassword,
+            phonenumber: req.body.phonenumber
+        })
+        res.json({ status: true, message: "user registered" })
     } catch (error) {
         res.json({ status: false, message: error.message })
 
+    }
+}
+
+exports.merchantLogin = async (req, res) => {
+    try {
+        const User = await Merchant.findOne({ username: req.body.username });
+        if (User) {
+            const auth = await bcrypt.compare(req.body.password, User.password)
+            if (auth) {
+                const merchantToken = await jwt.sign({ id: User._id }, "token", { expiresIn: '7d' })
+                await res.cookie("merchantToken", merchantToken, {
+                    withCredentials: true,
+                    httpOnly: false,
+                    maxAge: 2592000000
+                });
+                res.json({ message: "User logged in successfully", status: true });
+            } else {
+                res.json({ message: "Incorrect Password", status: false });
+            }
+        } else {
+            res.json({ message: "User Doesn't Exist", status: false });
+        }
+    } catch (error) {
+        res.json({ status: false, message: error.message })
+    }
+}
+
+exports.customerLogin = async (req, res) => {
+    try {
+        const User = await Customer.findOne({ username: req.body.username });
+        if (User) {
+            const auth = await bcrypt.compare(req.body.password, User.password)
+            if (auth) {
+                const customerToken = await jwt.sign({ id: User._id }, "token", { expiresIn: '7d' })
+                await res.cookie("customerToken", customerToken, {
+                    withCredentials: true,
+                    httpOnly: false,
+                    maxAge: 2592000000,
+                    sameSite: "None",
+                    secure: true
+
+                });
+                res.json({ message: "User logged in successfully", status: true });
+            } else {
+                res.json({ message: "Incorrect Password", status: false });
+            }
+        } else {
+            res.json({ message: "User Doesn't Exist", status: false });
+        }
+    } catch (error) {
+        res.json({ status: false, message: error.message })
     }
 }

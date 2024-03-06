@@ -1,5 +1,5 @@
 import { Stack, Button } from '@chakra-ui/react'
-import React from 'react'
+
 import { Link } from 'react-router-dom'
 
 const Homepage = () => {
@@ -8,7 +8,7 @@ const Homepage = () => {
     <Link to={"/merchant/login"}>
     <Button>Merchant</Button>
     </Link>
-    <Link to={"#"}>
+    <Link to={"/customer/login"}>
     <Button>Customer</Button>
     </Link>
 
