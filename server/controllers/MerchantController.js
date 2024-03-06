@@ -33,3 +33,17 @@ exports.getCustomerData = async (req, res) => {
         res.json({ message: "error", status: false });
     }
 }
+exports.paymentRequest = async (req, res) => {
+    try {
+        // const customerData = await Customer.findOne({ username: req.body.customerUsername })
+        // const merchantData = await Merchant.findOne({ _id: req.user })
+        // if (customerData && merchantData) {
+        //     res.json({ message: "User found", status: true, customerData, merchantData });
+        // }
+        // else {
+        //     res.json({ message: "User not found", status: false });
+        // }
+    } catch (error) {
+        // res.json({ message: "error", status: false });
+    }
+}

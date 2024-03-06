@@ -69,7 +69,10 @@ const MerchantPaymentRequest = () => {
   }
   async function reqPayment(){
     try {
-      if(amount && purpose){}
+      if(amount && purpose){
+        const response = await api.post('/api/merchant/payment-request', {merchantAccountNumber, customerAccountNumber, amount, purpose})
+
+      }
     } catch (error) {
       
     }
@@ -113,7 +116,7 @@ const MerchantPaymentRequest = () => {
                     <FormLabel>Purpose of Payment</FormLabel>
                     <Input type='text' readOnly onChange={(event) => handleInputChange(event, setPurpose)}/>
                   </Stack>
-                  <Button colorScheme='teal' >Request Payment</Button>
+                  <Button colorScheme='teal' onClick={()=>reqPayment()} >Request Payment</Button>
 
                   </>):(<>
                     <HStack mb={5} >
