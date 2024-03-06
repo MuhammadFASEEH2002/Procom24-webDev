@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const env = require('dotenv').config();
 const cors = require("cors");
 const IndexRouter = require('./routes/index.js')
+const cookieParser = require("cookie-parser");
 
 
 
@@ -14,6 +15,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(cookieParser())
 mongoose
   .connect(`${process.env.MONGO_LINK}`)
   .then((res) => {console.log("MongoDB connected")})
