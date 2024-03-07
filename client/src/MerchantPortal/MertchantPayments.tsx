@@ -114,10 +114,10 @@ export default function MerchantPayments() {
                     </HStack>
                 </HStack>
                 <HStack justifyContent={'space-evenly'} my={5} >
-                    <StatCard colorscheme="purple" title="All Payments" recordsCount={String(transactionCount)} amount={String(totalAmount)} icon={<IoGrid />} />
-                    <StatCard colorscheme="green" title="Succeeded" recordsCount={String(transactionCount)} amount={String(payedAmount)} icon={<FaCheck />} />
-                    <StatCard colorscheme="yellow" title="Pending" recordsCount={String(transactionCount)} amount={String(pendingAmount)} icon={<IoTimerOutline />} />
-                    <StatCard colorscheme="red" title="Rejected" recordsCount={String(transactionCount)} amount={String(rejectAmount)} icon={<MdCancel />} />
+                    <StatCard colorscheme="purple" title="All Payments" recordsCount={Number(transactionCount)} amount={Number(totalAmount)} icon={<IoGrid />} />
+                    <StatCard colorscheme="green" title="Succeeded" recordsCount={Number(transactionCount)} amount={Number(payedAmount)} icon={<FaCheck />} />
+                    <StatCard colorscheme="yellow" title="Pending" recordsCount={Number(transactionCount)} amount={Number(pendingAmount)} icon={<IoTimerOutline />} />
+                    <StatCard colorscheme="red" title="Rejected" recordsCount={Number(transactionCount)} amount={Number(rejectAmount)} icon={<MdCancel />} />
                 </HStack>
                 {transactions.length > 0 && <JTable tableData={transactions} tableHeads={tableHeads} heads={heads} size="sm" />}
             </Sidebar>
