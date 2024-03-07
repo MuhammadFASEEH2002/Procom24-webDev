@@ -14,9 +14,10 @@ import {
 } from '@chakra-ui/react'
 import { useEffect, useState } from 'react';
 import api from '../utils/api';
-import { Link, Routes, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import RoutesPath from '../utils/routes';
+import graph from '../assets/graph.png'
 
 
 const CustomerLogin = () => {
@@ -103,7 +104,7 @@ const CustomerLogin = () => {
         <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
           <Flex p={8} flex={1} align={'center'} justify={'center'}>
             <Stack spacing={4} w={'full'} maxW={'md'}>
-              <Heading fontSize={'2xl'}>Sign in to your Customer Account</Heading>
+              <Heading fontSize={'2xl'}>Sign in to your <Text color={'purple.400'} fontSize={28} fontFamily={'sans-serif'} >Customer Account</Text> </Heading>
               <FormControl id="email">
                 <FormLabel>Username</FormLabel>
                 <Input type="email" onChange={(event) => handleInputChange(event, setUsername)}
@@ -133,7 +134,7 @@ const CustomerLogin = () => {
                   <Checkbox>Remember me</Checkbox>
                   <Text color={'blue.500'}>Forgot password?</Text>
                 </Stack>
-                <Button colorScheme={'blue'} variant={'solid'} onClick={() => { customerLogin() }}>
+                <Button colorScheme={'purple'} variant={'solid'} onClick={() => { customerLogin() }}>
                   Sign in
                 </Button>
                 <Link to={RoutesPath.CUSTOMER_REGISTER}  >
@@ -142,14 +143,12 @@ const CustomerLogin = () => {
               </Stack>
             </Stack>
           </Flex>
-          <Flex flex={1}>
-            <Image
-              alt={'Login Image'}
-              objectFit={'cover'}
-              src={
-                'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1352&q=80'
-              }
-            />
+          <Flex flex={1} flexDirection={'column'} bg={'purple.400'} justifyContent={'center'} alignItems={'center'} >
+            <Text color={'white'} fontSize={32} fontFamily={'monospace'} fontWeight={'semibold'} mb={6} >Secure Payment</Text>
+            <Stack w={'70%'} boxShadow={'md'} borderRadius={6} >
+              <Image src={graph} borderRadius={6} />
+            </Stack>
+            <Text color={'white'} fontSize={28} fontWeight={'bold'} mt={6} >Monthly Report</Text>
           </Flex>
         </Stack>
       </>)}

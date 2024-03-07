@@ -79,7 +79,6 @@ export default function MerchantPayments() {
         const { data } = await api.get('/api/merchant/get-my-payment-requests/')
         console.log(data)
         const { status, myTransactions } = data
-
         if (status) {
             setTransavtions(myTransactions)
         }

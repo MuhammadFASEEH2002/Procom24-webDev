@@ -98,7 +98,6 @@ const CustomerPayments = () => {
         duration: 5000,
         isClosable: true
       })
-      navigate(RoutesPath.HOME)
     }
   }
   return (
