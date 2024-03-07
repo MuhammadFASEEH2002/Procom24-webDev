@@ -65,14 +65,14 @@ const MerchantPaymentRequest = () => {
 
     }
   }
-  async function reqPayment(customerId:any) {
+  async function reqPayment(customerId: any) {
+    console.log(customerId)
     try {
-      if (amount && purpose) {
         const { data } = await api.post('/api/merchant/payment-request', { merchantAccountNumber, customerAccountNumber, amount, purpose, customerId })
         console.log(data)
-      }
+    
     } catch (error) {
-console.log(error)
+      console.log(error)
     }
   }
 
@@ -130,7 +130,7 @@ console.log(error)
                     </HStack>
                     <Stack width={"45%"} mb={5}>
                       <FormLabel>Payment Amount</FormLabel>
-                      <Input type='number' placeholder='Enter Amount in Rupees' />
+                      <Input type='number' placeholder='Enter Amount in Rupees' value={amount} onChange={(event) => handleInputChange(event, setAmount)} />
                     </Stack>
                     <Stack width={"45%"} mb={5}>
                       <FormLabel>Customer Bank Name</FormLabel>
@@ -139,9 +139,9 @@ console.log(error)
 
                     <Stack width={"45%"} mb={5}>
                       <FormLabel>Purpose of Payment</FormLabel>
-                      <Input type='text'  onChange={(event) => handleInputChange(event, setPurpose)} />
+                      <Input type='text' onChange={(event) => handleInputChange(event, setPurpose)} />
                     </Stack>
-                    <Button colorScheme='teal' onClick={()=>{reqPayment(customerid)}} >Request Payment</Button>
+                    <Button colorScheme='teal' onClick={reqPayment.bind(null, customerid)} >Request Payment</Button>
 
                   </>) : (<>
                     <HStack mb={5} >

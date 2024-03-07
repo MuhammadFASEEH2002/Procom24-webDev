@@ -73,7 +73,7 @@ exports.paymentRequest = async (req, res) => {
         }
 
     } catch (error) {
-        res.json({ message: "error", status: false });
+        res.json({ message: error.message , status: false });
     }
 }
 exports.editRequest = async (req, res) => {
