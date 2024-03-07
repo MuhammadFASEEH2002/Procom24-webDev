@@ -34,6 +34,17 @@ exports.merchantRegister = async (req, res) => {
             });
             return;
         }
+        const accountNumberRegex = /^\d{16}$/;
+        if (
+            !accountNumberRegex.test(req.body.accountnumber)
+        ) {
+            res.json({
+                message:
+                    "Invalid Account Number",
+                status: false,
+            });
+            return;
+        }
         const bankNameRegex = /^[A-Za-z\s\-\.,']+$/;
         if (
             !bankNameRegex.test(req.body.bankname)
@@ -114,6 +125,17 @@ exports.customerRegister = async (req, res) => {
             });
             return;
         }
+        const accountNumberRegex = /^\d{16}$/;
+        if (
+            !accountNumberRegex.test(req.body.accountno)
+        ) {
+            res.json({
+                message:
+                    "Invalid Account Number",
+                status: false,
+            });
+            return;
+        }
         const bankNameRegex = /^[A-Za-z\s\-\.,']+$/;
         if (
             !bankNameRegex.test(req.body.bankname)
@@ -138,7 +160,7 @@ exports.customerRegister = async (req, res) => {
         }
         const phoneNumberRegex = /^03\d{9}$/;
         if (
-            !phoneNumberRegex.test(req.body.phonenumber)
+            !phoneNumberRegex.test(req.body.phoneNo)
         ) {
             res.json({
                 message:
@@ -151,8 +173,8 @@ exports.customerRegister = async (req, res) => {
 
         const usernameExist = await Customer.findOne({ username: req.body.username });
         const emailExist = await Customer.findOne({ email: req.body.email });
-        const accountnumberExist = await Customer.findOne({ accountnumber: req.body.accountnumber });
-        const phonenumberExist = await Customer.findOne({ phonenumber: req.body.phonenumber });
+        const accountnumberExist = await Customer.findOne({ accountnumber: req.body.accountno });
+        const phonenumberExist = await Customer.findOne({ phonenumber: req.body.phoneNo });
         if (usernameExist || emailExist || accountnumberExist || phonenumberExist) {
             res.json({ status: false, message: "Entered credentials are already used" })
             return;
@@ -163,9 +185,9 @@ exports.customerRegister = async (req, res) => {
             email: req.body.email,
             name: req.body.name,
             bankname: req.body.bankname,
-            accountnumber: req.body.accountnumber,
+            accountnumber: req.body.accountno,
             password: hashPassword,
-            phonenumber: req.body.phonenumber
+            phonenumber: req.body.phoneNo
         })
         res.json({ status: true, message: "user registered" })
     } catch (error) {
