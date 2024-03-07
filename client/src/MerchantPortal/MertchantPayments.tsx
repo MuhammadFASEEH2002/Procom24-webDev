@@ -96,7 +96,7 @@ export default function MerchantPayments() {
     return (
         <>
             <Sidebar active="Payments" >
-                <HStack justifyContent={'space-between'}>
+                <HStack justifyContent={'space-between'} flexWrap={'wrap'}>
                     <Heading>Payments</Heading>
                     <HStack>
                         <Button colorScheme={'purple'} variant={'outline'} leftIcon={<FaDownload />}
@@ -112,7 +112,7 @@ export default function MerchantPayments() {
                         </Link>
                     </HStack>
                 </HStack>
-                <HStack justifyContent={'space-evenly'} my={5} >
+                <HStack justifyContent={'space-evenly'} my={5} flexWrap={'wrap'} >
                     <StatCard colorscheme="purple" title="All Payments" recordsCount={Number(transactionCount)} amount={Number(totalAmount)} icon={<IoGrid />} />
                     <StatCard colorscheme="green" title="Succeeded" recordsCount={Number(transactionCount)} amount={Number(payedAmount)} icon={<FaCheck />} />
                     <StatCard colorscheme="yellow" title="Pending" recordsCount={Number(transactionCount)} amount={Number(pendingAmount)} icon={<IoTimerOutline />} />

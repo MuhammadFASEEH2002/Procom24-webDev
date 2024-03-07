@@ -64,9 +64,6 @@ const CustomerPayments = () => {
 
 
   const [transactionCount, setTransactionCount] = useState<string>("")
-  const [approvedTransactionCount, setApprovedTransactionCount] = useState<string>("")
-  const [rejectTransactionCount, setRejectTransactionCount] = useState<string>("")
-
 
 
   const toast = useToast()
@@ -78,9 +75,6 @@ const CustomerPayments = () => {
       // console.log(response.data);
       if (response.data.status) {
         setTransactionCount(response.data.totalTransactions)
-        setApprovedTransactionCount(response.data.successTransaction)
-        setRejectTransactionCount(response.data.rejectTransaction)
-
 
       } else {
         toast({
@@ -113,9 +107,9 @@ const CustomerPayments = () => {
           <Heading>Payments</Heading>
         </HStack>
         <HStack justifyContent={'space-evenly'} my={5} >
-          <StatCard colorscheme="purple" title="All Payments" recordsCount={Number(transactionCount)} icon={<IoGrid />} />
-          <StatCard colorscheme="green" title="Succeeded" recordsCount={Number(approvedTransactionCount)} icon={<FaCheck />} />
-          <StatCard colorscheme="red" title="Rejected" recordsCount={Number(rejectTransactionCount)} icon={<MdCancel />} />
+          <StatCard colorscheme="purple" title="All Payments" recordsCount={String(transactionCount)} icon={<IoGrid />} />
+          <StatCard colorscheme="green" title="Succeeded" recordsCount={String(transactionCount)} icon={<FaCheck />} />
+          <StatCard colorscheme="red" title="Rejected" recordsCount={String(transactionCount)} icon={<MdCancel />} />
         </HStack>
         {transactions.length > 0 && <JTable tableData={transactions} tableHeads={tableHeads} heads={heads} size="sm"
           action={handleAction}

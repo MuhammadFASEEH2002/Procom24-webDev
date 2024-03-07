@@ -5,14 +5,14 @@ import { useEffect, useState } from "react"
 import api from "../utils/api"
 import { CustomerDataType } from "../utils/types"
 
-const tableHeads = ['customer', 'email', 'phone', 'bank', 'accountnumber']
+const tableHeads = ['username','Name', 'email', 'phone', 'bank', 'accountnumber']
 
 
 
 export default function MerchantCustomers() {
     
     const [ customers , setCustomers ] = useState<CustomerDataType[] | []>([])
-    const heads = ['name', 'email', 'phonenumber', 'bankname', 'accountnumber']
+    const heads = ['username','name', 'email', 'phonenumber', 'bankname', 'accountnumber']
 
 
     useEffect(()=>{
