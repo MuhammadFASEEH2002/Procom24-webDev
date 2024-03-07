@@ -61,7 +61,7 @@ interface SidebarProps extends BoxProps {
 }
 
 const LinkItems: Array<LinkItemProps> = [
-  { name: 'Payments', icon: FiHome, link: RoutesPath.CUSTOMER_DASHBOARD },
+  { name: 'Home', icon: FiHome, link: RoutesPath.CUSTOMER_DASHBOARD },
   { name: 'Payments', icon: FiDollarSign, link: RoutesPath.CUSTOMER_PAYMENTS },
   { name: 'Instant Payment', icon: FaCircleDollarToSlot, link: RoutesPath.CUSTOMER_SEND_PAYMENTS },
   { name: 'Logout', icon: CiLogout, link: RoutesPath.CUSTOMER_LOGOUT },
@@ -248,7 +248,7 @@ const Sidebar = ({ children } : { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
+    <Box minH="100vh" bg={useColorModeValue('white.100', 'gray.900')}>
       <SidebarContent onClose={() => onClose} display={{ base: 'none', md: 'block' }} />
       <Drawer
         isOpen={isOpen}

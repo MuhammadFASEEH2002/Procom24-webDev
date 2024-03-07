@@ -67,7 +67,7 @@ const LinkItems: Array<LinkItemProps> = [
   { name: 'Customers', icon: FiUsers, link: RoutesPath.MERCHANT_CUSTOMERS },
   { name: 'Payment Request', icon: IoCreateOutline, link: RoutesPath.MERCHANT_PAYMENT_REQUEST },
   { name: 'Report', icon: FiColumns, link: RoutesPath.MERCHANT_REPORT },
-  { name: 'Logout', icon: CiLogout, link: RoutesPath.CUSTOMER_LOGOUT },
+  { name: 'Logout', icon: CiLogout, link: RoutesPath.MERCHANT_LOGOUT },
 
 
 ]
