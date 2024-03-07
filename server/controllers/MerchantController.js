@@ -21,9 +21,9 @@ exports.getMe = async (req, res) => {
 exports.getAllCustomers = async (req, res) => {
     try {
         const customer = await Customer.find()
-        res.json({ message: "customer found", status: true, customer});
+        res.json({ message: "customer found", status: true, customer });
         console.log(customer)
-    }catch{
+    } catch {
         res.json({ message: "error", status: false });
 
     }
@@ -73,7 +73,7 @@ exports.paymentRequest = async (req, res) => {
         }
 
     } catch (error) {
-        res.json({ message: error.message , status: false });
+        res.json({ message: error.message, status: false });
     }
 }
 exports.editRequest = async (req, res) => {
@@ -113,7 +113,15 @@ exports.getMyRequests = async (req, res) => {
         const myTransactions = await Transaction.find({ merchant_id: req.user }).populate(
             "customer_id"
         );
-        res.json({ message: " Transactions fetched", status: true , myTransactions});
+        const modifiedTransactions = myTransactions.map(transaction => {
+            const { name, bankname } = transaction.customer_id.toObject();
+            return {
+                name,
+                bankname,
+                ...transaction.toObject()
+            };
+        });
+        res.json({ message: " Transactions fetched", status: true, myTransactions: modifiedTransactions });
     }
     catch (error) {
         res.json({ message: error.message, status: false });

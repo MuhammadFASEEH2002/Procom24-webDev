@@ -9,30 +9,31 @@ import { FaCheck } from "react-icons/fa";
 import JTable from "../components/Table";
 
 import RoutesPath from "../utils/routes";
+import { useEffect, useState } from "react";
+import api from "../utils/api";
 
-const tableHeads = ['account no', 'status', 'description', 'bank', 'date', 'customer', 'amount']
-const heads = ['accountNo', 'status', 'description', 'bank', 'date', 'customer', 'amount']
-const tableData = [
-    {
-        accountNo: '1934578934',
-        status: 'pending',
-        description: 'Payment for order 123456',
-        bank: 'Meezan Bank',
-        date: '12/12/2021',
-        customer: 'John Doe',
-        amount: '$100.00',
-    },
-    {
-        accountNo: '948578',
-        status: 'approved',
-        description: 'Payment for order 24354',
-        bank: 'Bank of Al-Habib',
-        date: '12/12/2021',
-        customer: 'John Doe',
-        amount: '$100.00',
-    },
-]
+const tableHeads = [ 'customer', 'account no', 'status', 'description', 'date', 'amount']
+const heads = [ 'name', 'customer_account_number', 'status', 'purpose', 'createdAt',  'amount']
 export default function MerchantPayments() {
+
+    const [ transactions , setTransavtions  ] = useState([])
+
+    useEffect(()=>{
+        loadPayments()
+    },[])
+
+
+
+    const loadPayments = async () =>{
+        const { data } = await api.get('/api/merchant/get-my-payment-requests/')
+        console.log(data)
+        const {status , myTransactions } = data
+
+        if(status){
+            setTransavtions(myTransactions)
+        }
+    }
+
     return (
         <>
             <Sidebar active="Payments" >
@@ -55,7 +56,7 @@ export default function MerchantPayments() {
                     <StatCard colorscheme="yellow" title="Pending" recordsCount={234} amount={3434} icon={<IoTimerOutline />} />
                     <StatCard colorscheme="red" title="Rejected" recordsCount={234} amount={3434} icon={<MdCancel />} />
                 </HStack>
-                <JTable tableData={tableData} tableHeads={tableHeads} heads={heads} size="sm" />
+              {transactions.length > 0 &&   <JTable tableData={transactions} tableHeads={tableHeads} heads={heads} size="sm" />}
             </Sidebar>
         </>
     )
