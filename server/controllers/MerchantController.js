@@ -35,14 +35,15 @@ exports.getCustomerData = async (req, res) => {
 }
 exports.paymentRequest = async (req, res) => {
     try {
-        if (req.body.customerAccountNumber || req.body.merchantAccountNumber || req.body.amount || req.body.customerId) {
+        if (req.body.customerAccountNumber || req.body.merchantAccountNumber || req.body.amount || req.body.customerId || req.body.purpose) {
             await Transaction.create({
                 customer_account_number: req.body.customerAccountNumber,
                 merchant_account_number: req.body.merchantAccountNumber,
                 status: "pending",
                 amount: req.body.amount,
                 merchant_id: req.user,
-                customer_id: req.body.customerId
+                customer_id: req.body.customerId,
+                purpose: req.bosy.purpose
             })
             res.json({ message: "Request created", status: true });
 
