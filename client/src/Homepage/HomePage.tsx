@@ -56,7 +56,7 @@ const Homepage = () => {
 
         <VStack
 
-          width={'75%'}
+          width={'70%'}
         >
           <Heading color={'purple.400'}
           >Free means free</Heading>
@@ -65,9 +65,10 @@ const Homepage = () => {
         </VStack>
         <HStack
           width={'25%'}
+        
 
         >
-          <Image src={phone} />
+          <Image src={phone} border={'1px solid grey'} rounded={6} />
 
         </HStack>
 
