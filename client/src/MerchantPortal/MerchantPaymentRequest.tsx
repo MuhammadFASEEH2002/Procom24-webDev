@@ -14,6 +14,8 @@ const MerchantPaymentRequest = () => {
   const [amount, setAmount] = useState("")
   const [bankname, setBankName] = useState<string>("")
   const [purpose, setPurpose] = useState<string>("")
+  const [customerid, setCustomerid] = useState<Object>("")
+
   const toast = useToast()
 
 
@@ -31,9 +33,9 @@ const MerchantPaymentRequest = () => {
           setCustomerEmail(customerData.email);
           setMerchantAccountNumber(merchantData.accountnumber);
           setCustomerAccountNumber(customerData.accountnumber);
-          setBankName(customerData.bankname);
+          setBankName(customerData.bankname)
+          setCustomerid(customerData._id)
           setFetch(true)
-
         } else {
           toast({
             title: "Invalid Username",
@@ -57,14 +59,14 @@ const MerchantPaymentRequest = () => {
 
     }
   }
-  async function reqPayment() {
+  async function reqPayment(customerId:any) {
     try {
       if (amount && purpose) {
-        const { data } = await api.post('/api/merchant/payment-request', { merchantAccountNumber, customerAccountNumber, amount, purpose })
+        const { data } = await api.post('/api/merchant/payment-request', { merchantAccountNumber, customerAccountNumber, amount, purpose, customerId })
         console.log(data)
       }
     } catch (error) {
-
+console.log(error)
     }
   }
   return (
@@ -103,9 +105,9 @@ const MerchantPaymentRequest = () => {
 
                     <Stack width={"45%"} mb={5}>
                       <FormLabel>Purpose of Payment</FormLabel>
-                      <Input type='text' readOnly onChange={(event) => handleInputChange(event, setPurpose)} />
+                      <Input type='text'  onChange={(event) => handleInputChange(event, setPurpose)} />
                     </Stack>
-                    <Button colorScheme='teal' onClick={reqPayment} >Request Payment</Button>
+                    <Button colorScheme='teal' onClick={()=>{reqPayment(customerid)}} >Request Payment</Button>
 
                   </>) : (<>
                     <HStack mb={5} >
