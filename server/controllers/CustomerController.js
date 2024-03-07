@@ -73,7 +73,11 @@ exports.rejectTransaction = async (req, res) => {
 exports.getStats = async (req, res) => {
     try {
         const totalTransactions = await Transaction.countDocuments({ customer_id: req.user })
-        res.json({ status: true, totalTransactions });
+        const successTransaction = await Transaction.countDocuments({ customer_id: req.user, status: "approved" })
+        const rejectTransaction = await Transaction.countDocuments({ customer_id: req.user, status: "rejected" })
+
+
+        res.json({ status: true, totalTransactions ,successTransaction, rejectTransaction});
     } catch (error) {
         res.json({ message: error.message, status: false });
 

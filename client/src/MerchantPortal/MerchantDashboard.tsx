@@ -69,12 +69,11 @@ const MerchantDashboard = () => {
   return (
     <>
       <Sidebar active="Home" >
-
         <HStack justifyContent={'space-evenly'} my={5} >
-          <StatCard colorscheme="purple" title="All Payments" recordsCount={String(transactionCount)} amount={String(totalAmount)} icon={<IoGrid />} />
-          <StatCard colorscheme="green" title="Succeeded" recordsCount={String(transactionCount)} amount={String(payedAmount)} icon={<FaCheck />} />
-          <StatCard colorscheme="yellow" title="Pending" recordsCount={String(transactionCount)} amount={String(pendingAmount)} icon={<IoTimerOutline />} />
-          <StatCard colorscheme="red" title="Rejected" recordsCount={String(transactionCount)} amount={String(rejectAmount)} icon={<MdCancel />} />
+          <StatCard colorscheme="purple" title="All Payments" recordsCount={Number(transactionCount)} amount={Number(totalAmount)} icon={<IoGrid />} />
+          <StatCard colorscheme="green" title="Succeeded" recordsCount={Number(transactionCount)} amount={Number(payedAmount)} icon={<FaCheck />} />
+          <StatCard colorscheme="yellow" title="Pending" recordsCount={Number(transactionCount)} amount={Number(pendingAmount)} icon={<IoTimerOutline />} />
+          <StatCard colorscheme="red" title="Rejected" recordsCount={Number(transactionCount)} amount={Number(rejectAmount)} icon={<MdCancel />} />
         </HStack>
         <HStack mt={5} mb={5}>
           <Heading>Yearly Income</Heading>
