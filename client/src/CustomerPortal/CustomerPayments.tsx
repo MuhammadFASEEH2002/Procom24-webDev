@@ -108,9 +108,9 @@ const CustomerPayments = () => {
           <Heading>Payments</Heading>
         </HStack>
         <HStack justifyContent={'space-evenly'} my={5} >
-          <StatCard colorscheme="purple" title="All Payments" recordsCount={String(transactionCount)} icon={<IoGrid />} />
-          <StatCard colorscheme="green" title="Succeeded" recordsCount={String(transactionCount)} icon={<FaCheck />} />
-          <StatCard colorscheme="red" title="Rejected" recordsCount={String(transactionCount)} icon={<MdCancel />} />
+          <StatCard colorscheme="purple" title="All Payments" recordsCount={Number(transactionCount)} icon={<IoGrid />} />
+          <StatCard colorscheme="green" title="Succeeded" recordsCount={Number(transactionCount)} icon={<FaCheck />} />
+          <StatCard colorscheme="red" title="Rejected" recordsCount={Number(transactionCount)} icon={<MdCancel />} />
         </HStack>
         {transactions.length > 0 && <JTable tableData={transactions} tableHeads={tableHeads} heads={heads} size="sm"
           action={handleAction}
