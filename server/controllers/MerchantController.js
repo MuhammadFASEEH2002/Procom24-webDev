@@ -18,7 +18,16 @@ exports.getMe = async (req, res) => {
         res.json({ message: "error", status: false });
     }
 }
+exports.getAllCustomers = async (req, res) => {
+    try {
+        const customer = await Customer.find()
+        res.json({ message: "customer found", status: true, customer});
+        console.log(customer)
+    }catch{
+        res.json({ message: "error", status: false });
 
+    }
+}
 exports.getCustomerData = async (req, res) => {
     try {
         const customerData = await Customer.findOne({ username: req.body.customerUsername })
