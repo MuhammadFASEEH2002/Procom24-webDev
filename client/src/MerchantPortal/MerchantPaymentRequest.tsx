@@ -1,8 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Sidebar from './components/Sidebar'
 import { Card, CardBody, FormControl, FormLabel, Input, Stack, HStack, Button, useToast } from '@chakra-ui/react'
 import api from '../utils/api'
 import { CustomerDataType } from '../utils/types'
+import QRCodeStyling from 'qr-code-styling'
+
+import logo from '../assets/logo.png'
 
 const MerchantPaymentRequest = () => {
   const [loading, setLoading] = useState<boolean>(false)
@@ -15,6 +18,9 @@ const MerchantPaymentRequest = () => {
   const [bankname, setBankName] = useState<string>("")
   const [purpose, setPurpose] = useState<string>("")
   const toast = useToast()
+
+
+  const qr = useRef()
 
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>, setState: any) => {
@@ -67,6 +73,34 @@ const MerchantPaymentRequest = () => {
 
     }
   }
+
+
+
+  useEffect(() => {
+    const qrCode = new QRCodeStyling({
+      width: 300,
+      height: 300,
+      data: 'Hello World',
+      image: 'https://placehold.co/600x400/orange/white?text=PayEaze',
+      dotsOptions: {
+        color: '#ba55d3',
+        type: 'square'
+      },
+      backgroundOptions: {
+        color: 'transparent'
+      },
+      imageOptions: {
+        crossOrigin: 'anonymous',
+        margin: 20
+      }
+    })
+    if (qr.current) {
+      console.log(qr.current.innerHTML = '')
+    }
+    qrCode.append(qr.current)
+
+  }, [])
+
   return (
     <>
       <Sidebar active='Payment Request'  >
@@ -125,6 +159,8 @@ const MerchantPaymentRequest = () => {
             </Card>
           </Stack>
         </>)}
+
+        <div ref={qr} ></div>
       </Sidebar>
     </>
   )
