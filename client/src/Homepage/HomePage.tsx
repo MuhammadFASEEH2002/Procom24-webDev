@@ -32,16 +32,18 @@ const Homepage = () => {
       <HStack
         backgroundImage={`url(${rounded})`}
         backgroundRepeat={'no-repeat'}
-        direction={{ base: 'column', md: 'row' }} minH={'70vh'} justifyContent={'center'} >
+        direction={{ base: 'column', md: 'row' }} minH={'70vh'} justifyContent={'center'} 
+        flexWrap={'wrap'}
+        >
         <HStack
-          width={'45%'}
+          width={{ base: '80%', md : '45%'}}
         >
           <ImageMockup img={customer_bg} url={'/customer'} />
 
         </HStack>
         <VStack
 
-          width={'45%'}
+          width={{ base : '55%' , md : '45%' }}
         >
           <Heading color={'purple.400'} >Accepted globally</Heading>
           <Text lineHeight={10} fontSize={22} textAlign={'center'} mt={2}>Your Visa debit card is accepted at millions of retail and online merchants worldwide.</Text>
@@ -77,7 +79,7 @@ const Homepage = () => {
       <Stack my={10} justify={'center'} alignItems={'center'}  >
         <Heading fontSize={44} >Free And Easy Signup</Heading>
       </Stack>
-      <HStack justifyContent={'space-evenly'} h={'50vh'}>
+      <HStack justifyContent={'space-evenly'} h={'50vh'} flexWrap={'wrap'}>
         <Stack justify={'center'} alignItems={'center'} >
           <Image src={box2} width={40}></Image>
           <Text fontWeight={'semibold'} fontSize={22} >SignUp in Few Easy Steps</Text>
