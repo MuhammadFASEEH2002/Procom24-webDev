@@ -1,9 +1,9 @@
-import { HStack, Heading, Button, Card, Text, Badge } from "@chakra-ui/react"
+import { HStack, Heading, Button, Card, Text, Badge, useToast } from "@chakra-ui/react"
 import Sidebar from "./components/Sidebar"
 import { FaDownload, FaPlus, } from "react-icons/fa6"
 import { IoGrid } from "react-icons/io5";
 import { MdCancel } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoTimerOutline } from "react-icons/io5";
 import { FaCheck } from "react-icons/fa";
 import JTable from "../components/Table";
@@ -12,24 +12,75 @@ import RoutesPath from "../utils/routes";
 import { useEffect, useState } from "react";
 import api from "../utils/api";
 
-const tableHeads = [ 'customer', 'account no', 'status', 'description', 'date', 'amount']
-const heads = [ 'name', 'customer_account_number', 'status', 'purpose', 'createdAt',  'amount']
+const tableHeads = ['customer', 'account no', 'status', 'description', 'date', 'amount']
+const heads = ['name', 'customer_account_number', 'status', 'purpose', 'createdAt', 'amount']
 export default function MerchantPayments() {
 
-    const [ transactions , setTransavtions  ] = useState([])
+    const [transactions, setTransavtions] = useState([])
 
-    useEffect(()=>{
+    useEffect(() => {
         loadPayments()
-    },[])
+        getStats()
+    }, [])
 
 
+    const [totalAmount, setTotalAmount] = useState<string>("")
+    const [payedAmount, setPayedAmount] = useState<string>("")
 
-    const loadPayments = async () =>{
+    const [rejectAmount, setRejectAmount] = useState<string>("")
+
+    const [pendingAmount, setPendingAmount] = useState<string>("")
+    const [transactionCount, setTransactionCount] = useState<string>("")
+
+
+    const toast = useToast()
+    const navigate = useNavigate()
+
+
+    async function getStats() {
+        try {
+            const response = await api.get('/api/merchant/get-stats')
+            // console.log(response.data);
+            if (response.data.status) {
+                setTotalAmount(response.data.totalAmount)
+                setPayedAmount(response.data.payedAmount)
+
+                setRejectAmount(response.data.rejectAmount)
+
+                setPendingAmount(response.data.pendingAmount)
+                setTransactionCount(response.data.totalTransactions)
+
+            } else {
+                toast({
+                    title: "Auth Error",
+                    description: response.data.message,
+                    status: "error",
+                    position: "top",
+                    duration: 5000,
+                    isClosable: true
+                })
+
+            }
+        }
+
+        catch (error) {
+            toast({
+                title: "Network Error",
+
+                status: "error",
+                position: "top",
+                duration: 5000,
+                isClosable: true
+            })
+            navigate(RoutesPath.HOME)
+        }
+    }
+    const loadPayments = async () => {
         const { data } = await api.get('/api/merchant/get-my-payment-requests/')
         console.log(data)
-        const {status , myTransactions } = data
+        const { status, myTransactions } = data
 
-        if(status){
+        if (status) {
             setTransavtions(myTransactions)
         }
     }
@@ -51,12 +102,12 @@ export default function MerchantPayments() {
                     </HStack>
                 </HStack>
                 <HStack justifyContent={'space-evenly'} my={5} >
-                    <StatCard colorscheme="purple" title="All Payments" recordsCount={234} amount={2345} icon={<IoGrid />} />
-                    <StatCard colorscheme="green" title="Succeeded" recordsCount={234} amount={3434} icon={<FaCheck />} />
-                    <StatCard colorscheme="yellow" title="Pending" recordsCount={234} amount={3434} icon={<IoTimerOutline />} />
-                    <StatCard colorscheme="red" title="Rejected" recordsCount={234} amount={3434} icon={<MdCancel />} />
+                    <StatCard colorscheme="purple" title="All Payments" recordsCount={String(transactionCount)} amount={String(totalAmount)} icon={<IoGrid />} />
+                    <StatCard colorscheme="green" title="Succeeded" recordsCount={String(transactionCount)} amount={String(payedAmount)} icon={<FaCheck />} />
+                    <StatCard colorscheme="yellow" title="Pending" recordsCount={String(transactionCount)} amount={String(pendingAmount)} icon={<IoTimerOutline />} />
+                    <StatCard colorscheme="red" title="Rejected" recordsCount={String(transactionCount)} amount={String(rejectAmount)} icon={<MdCancel />} />
                 </HStack>
-              {transactions.length > 0 &&   <JTable tableData={transactions} tableHeads={tableHeads} heads={heads} size="sm" />}
+                {transactions.length > 0 && <JTable tableData={transactions} tableHeads={tableHeads} heads={heads} size="sm" />}
             </Sidebar>
         </>
     )
