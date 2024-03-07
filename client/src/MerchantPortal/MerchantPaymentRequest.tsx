@@ -1,14 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Sidebar from './components/Sidebar'
-import { Card, CardBody, FormControl, FormLabel, Input, Stack, HStack, Button, useToast } from '@chakra-ui/react'
+import { Card, CardBody, FormControl, FormLabel, Input, Stack, HStack, Button, useToast, Heading } from '@chakra-ui/react'
 import api from '../utils/api'
 import { CustomerDataType } from '../utils/types'
 import QRCodeStyling from 'qr-code-styling'
 
-import logo from '../assets/logo.png'
-
 const MerchantPaymentRequest = () => {
   const [loading, setLoading] = useState<boolean>(false)
+  const [paymentRequestSent, setPRS] = useState<boolean>(false)
   const [fetch, setFetch] = useState<boolean>(false)
   const [customerUsername, setCustomerUsername] = useState<string>("")
   const [customerEmail, setCustomerEmail] = useState<string>("")
@@ -69,7 +68,28 @@ const MerchantPaymentRequest = () => {
     console.log(customerId)
     try {
       const { data } = await api.post('/api/merchant/payment-request', { merchantAccountNumber, customerAccountNumber, amount, purpose, customerId })
-      console.log(data)
+      const { status, message } = data
+      if (status) {
+        setFetch(false)
+        setPRS(true)
+        toast({
+          title: 'Payment Request Sent',
+          status: 'success',
+          position: 'top',
+          duration: 5000,
+          isClosable: true,
+          description: message
+        })
+      } else {
+        toast({
+          title: 'All Feilds are Required',
+          status: 'error',
+          position: 'top',
+          duration: 5000,
+          isClosable: true,
+          description: message
+        })
+      }
 
     } catch (error) {
       console.log(error)
@@ -169,8 +189,10 @@ const MerchantPaymentRequest = () => {
             </Card>
           </Stack>
         </>)}
-
-        <div ref={qr} ></div>
+        {paymentRequestSent && <Stack justify={'center'} alignItems={'center'}>
+          <Heading>Payment Request Sent</Heading>
+          <div ref={qr} ></div>
+        </Stack>}
       </Sidebar>
     </>
   )
