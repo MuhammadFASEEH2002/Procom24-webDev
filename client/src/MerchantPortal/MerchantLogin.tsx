@@ -108,12 +108,25 @@ const MerchantLogin = () => {
             <Stack spacing={4} w={'full'} maxW={'md'}>
               <Heading fontSize={'2xl'}>Sign in to your Merchant Account</Heading>
               <FormControl id="email">
-                <FormLabel>Email address</FormLabel>
-                <Input type="email" onChange={(event) => handleInputChange(event, setUsername)} />
+                <FormLabel>Username</FormLabel>
+                <Input type="text" onChange={(event) => handleInputChange(event, setUsername)}
+                   onKeyPress={event => {
+                    if (event.key === 'Enter') {
+                      merchantLogin()
+                    }
+                  }}
+                />
               </FormControl>
               <FormControl id="password">
                 <FormLabel>Password</FormLabel>
-                <Input type="password" onChange={(event) => handleInputChange(event, setPassword)} />
+                <Input type="password" onChange={(event) => handleInputChange(event, setPassword)}
+                  onKeyPress={event => {
+                    if (event.key === 'Enter') {
+                      merchantLogin()
+                    }
+                  }}
+
+                />
               </FormControl>
               <Stack spacing={6}>
                 <Stack

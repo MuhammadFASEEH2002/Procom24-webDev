@@ -12,7 +12,6 @@ export type MerchantDataType = {
     accountnumber: string,
 
 }
-
 export type UserType = {
     _id: Object,
     name: string,
