@@ -1,6 +1,8 @@
 import { HStack, Heading } from "@chakra-ui/react"
 import Sidebar from "./components/Sidebar"
 import JTable from "../components/Table"
+import { useEffect, useState } from "react"
+import api from "../utils/api"
 
 
 const tableHeads = ['customer', 'email', 'phone', 'bank', 'created At',]
@@ -151,6 +153,20 @@ const tableData = [
 
 
 export default function MerchantCustomers() {
+
+    const [ customers , setCustomers ] = useState([])
+
+
+    useEffect(()=>{
+        loadCustomers()
+    },[])
+
+
+    const loadCustomers = async () => {
+        const { data } = await api.get('/api/merchant/get-all-customer-data');
+        console.log(data)
+    }
+
     return (
         <>
             <Sidebar>
