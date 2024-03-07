@@ -1,4 +1,4 @@
-import { Card, Text, HStack, Badge, Button, Heading } from "@chakra-ui/react"
+import { Card, Text, HStack, Badge, Button, Heading, useToast } from "@chakra-ui/react"
 
 import Sidebar from "./components/Sidebar"
 import { IoGrid } from "react-icons/io5";
@@ -8,6 +8,8 @@ import { FaCheck } from "react-icons/fa";
 import JTable from "../components/Table"
 import { useEffect, useState } from "react";
 import api from "../utils/api";
+import { useNavigate } from "react-router";
+import RoutesPath from "../utils/routes";
 
 
 
@@ -48,6 +50,7 @@ const CustomerPayments = () => {
 
   useEffect(() => {
     loadTransations()
+    getStats()
   }, [])
 
   const loadTransations = async () => {
@@ -60,7 +63,44 @@ const CustomerPayments = () => {
   }
 
 
+  const [transactionCount, setTransactionCount] = useState<string>("")
 
+
+  const toast = useToast()
+  const navigate = useNavigate()
+
+  async function getStats() {
+    try {
+      const response = await api.get('/api/customer/get-stats')
+      // console.log(response.data);
+      if (response.data.status) {
+        setTransactionCount(response.data.totalTransactions)
+
+      } else {
+        toast({
+          title: "Auth Error",
+          description: response.data.message,
+          status: "error",
+          position: "top",
+          duration: 5000,
+          isClosable: true
+        })
+
+      }
+    }
+
+    catch (error) {
+      toast({
+        title: "Network Error",
+
+        status: "error",
+        position: "top",
+        duration: 5000,
+        isClosable: true
+      })
+      navigate(RoutesPath.HOME)
+    }
+  }
   return (
     <>
       <Sidebar>
@@ -68,9 +108,9 @@ const CustomerPayments = () => {
           <Heading>Payments</Heading>
         </HStack>
         <HStack justifyContent={'space-evenly'} my={5} >
-          <StatCard colorscheme="purple" title="All Payments" recordsCount={234} icon={<IoGrid />} />
-          <StatCard colorscheme="green" title="Succeeded" recordsCount={234} icon={<FaCheck />} />
-          <StatCard colorscheme="red" title="Rejected" recordsCount={234} icon={<MdCancel />} />
+          <StatCard colorscheme="purple" title="All Payments" recordsCount={String(transactionCount)} icon={<IoGrid />} />
+          <StatCard colorscheme="green" title="Succeeded" recordsCount={String(transactionCount)} icon={<FaCheck />} />
+          <StatCard colorscheme="red" title="Rejected" recordsCount={String(transactionCount)} icon={<MdCancel />} />
         </HStack>
         {transactions.length > 0 && <JTable tableData={transactions} tableHeads={tableHeads} heads={heads} size="sm"
           action={handleAction}

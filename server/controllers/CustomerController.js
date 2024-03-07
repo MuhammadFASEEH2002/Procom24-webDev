@@ -32,7 +32,7 @@ exports.getAllTransactions = async (req, res) => {
                 ...transaction.toObject()
             };
         });
-        res.json({ message: " Transactions fetched", status: true , myTransactions : modifiedTransactions});
+        res.json({ message: " Transactions fetched", status: true, myTransactions: modifiedTransactions });
     } catch (error) {
         res.json({ message: "error", status: false });
     }
@@ -40,9 +40,9 @@ exports.getAllTransactions = async (req, res) => {
 exports.fetchTransaction = async (req, res) => {
     try {
         // transaction id should be given with the onClick func on pay button
-      const transaction=await Transaction.findOne({ _id: req.body.transaction_id })
-      
-        res.json({ message: " Transaction fetched", status: true , transaction});
+        const transaction = await Transaction.findOne({ _id: req.body.transaction_id })
+
+        res.json({ message: " Transaction fetched", status: true, transaction });
     } catch (error) {
         res.json({ message: "error", status: false });
     }
@@ -52,8 +52,8 @@ exports.payTransaction = async (req, res) => {
     try {
         // transaction id should be given with the onClick func on pay button
         await Transaction.findByIdAndUpdate({ _id: req.body.transaction_id }, { status: "approved" })
-      
-        res.json({ message: " Payment Approved", status: true});
+
+        res.json({ message: " Payment Approved", status: true });
     } catch (error) {
         res.json({ message: "error", status: false });
     }
@@ -63,9 +63,21 @@ exports.rejectTransaction = async (req, res) => {
     try {
         // transaction id should be given with the onClick func on pay button
         await Transaction.findByIdAndUpdate({ _id: req.body.transaction_id }, { status: "rejected" })
-      
-        res.json({ message: " Payment Rejected", status: true});
+
+        res.json({ message: " Payment Rejected", status: true });
     } catch (error) {
-        res.json({ message: "error", status: false });
+        res.json({ message: error.message, status: false });
     }
+}
+
+exports.getStats = async (req, res) => {
+    try {
+        const totalTransactions = await Transaction.countDocuments({ customer_id: req.user })
+        res.json({ status: true, totalTransactions });
+    } catch (error) {
+        res.json({ message: error.message, status: false });
+
+    }
+    // const allTransactions = await Transaction.find({ customer_id: req.user })
+
 }
