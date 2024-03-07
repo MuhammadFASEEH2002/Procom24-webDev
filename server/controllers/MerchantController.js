@@ -156,6 +156,8 @@ exports.exportPayments = async (req, res) => {
 
 exports.getStats=async (req,res)=>{
     const allTransactions = await Transaction.find({ merchant_id: req.user })
+    const totalTransactions = await Transaction.countDocuments({ merchant_id: req.user })
+
     // const allTransactions = await Transaction.find({ merchant_id: req.user })
     let totalAmount=0
     let payedAmount=0
@@ -178,7 +180,7 @@ exports.getStats=async (req,res)=>{
         )
 
 
-    res.json({  status: true , totalAmount, payedAmount, rejectAmount, pendingAmount});
+    res.json({  status: true , totalAmount, payedAmount, rejectAmount, pendingAmount, totalTransactions});
 
 
 }

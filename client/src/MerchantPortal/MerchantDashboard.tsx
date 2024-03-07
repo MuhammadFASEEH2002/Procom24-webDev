@@ -1,26 +1,79 @@
-import { HStack, Heading, Button, Card, Text, Badge } from "@chakra-ui/react"
+import { HStack, Heading, Button, Card, Text, Badge, useToast } from "@chakra-ui/react"
 
 import Sidebar from './components/Sidebar.tsx'
 import MerchantBarChart from './components/BarChart.tsx'
-
-
 import { FaDownload, FaPlus, } from "react-icons/fa6"
 import { IoGrid } from "react-icons/io5";
 import { MdCancel } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoTimerOutline } from "react-icons/io5";
 import { FaCheck } from "react-icons/fa";
-
+import api from "../utils/api.ts";
+import { useEffect, useState } from "react";
+useNavigate
 const MerchantDashboard = () => {
+  const [totalAmount, setTotalAmount] = useState<string>("")
+  const [payedAmount, setPayedAmount] = useState<string>("")
+
+  const [rejectAmount, setRejectAmount] = useState<string>("")
+
+  const [pendingAmount, setPendingAmount] = useState<string>("")
+  const [transactionCount, setTransactionCount] = useState<string>("")
+
+
+  const toast = useToast()
+  const navigate = useNavigate()
+  useEffect(() => {
+    getStats()
+  }, []);
+
+  async function getStats() {
+    try {
+      const response = await api.get('/api/merchant/get-stats')
+      // console.log(response.data);
+      if (response.data.status) {
+        setTotalAmount(response.data.totalAmount)
+        setPayedAmount(response.data.payedAmount)
+
+        setRejectAmount(response.data.rejectAmount)
+
+        setPendingAmount(response.data.pendingAmount)
+        setTransactionCount(response.data.totalTransactions)
+
+      } else {
+        toast({
+          title: "Auth Error",
+          description: response.data.message,
+          status: "error",
+          position: "top",
+          duration: 5000,
+          isClosable: true
+        })
+
+      }
+    }
+
+    catch (error) {
+      toast({
+        title: "Network Error",
+
+        status: "error",
+        position: "top",
+        duration: 5000,
+        isClosable: true
+      })
+      navigate(RoutesPath.HOME)
+    }
+  }
   return (
     <>
       <Sidebar active="Home" >
 
         <HStack justifyContent={'space-evenly'} my={5} >
-          <StatCard colorscheme="purple" title="All Payments" recordsCount={234} amount={2345} icon={<IoGrid />} />
-          <StatCard colorscheme="green" title="Succeeded" recordsCount={234} amount={3434} icon={<FaCheck />} />
-          <StatCard colorscheme="yellow" title="Pending" recordsCount={234} amount={3434} icon={<IoTimerOutline />} />
-          <StatCard colorscheme="red" title="Rejected" recordsCount={234} amount={3434} icon={<MdCancel />} />
+          <StatCard colorscheme="purple" title="All Payments" recordsCount={String(transactionCount)} amount={String(totalAmount)} icon={<IoGrid />} />
+          <StatCard colorscheme="green" title="Succeeded" recordsCount={String(transactionCount)} amount={String(payedAmount)} icon={<FaCheck />} />
+          <StatCard colorscheme="yellow" title="Pending" recordsCount={String(transactionCount)} amount={String(pendingAmount)} icon={<IoTimerOutline />} />
+          <StatCard colorscheme="red" title="Rejected" recordsCount={String(transactionCount)} amount={String(rejectAmount)} icon={<MdCancel />} />
         </HStack>
         <HStack mt={5} mb={5}>
           <Heading>Yearly Income</Heading>
