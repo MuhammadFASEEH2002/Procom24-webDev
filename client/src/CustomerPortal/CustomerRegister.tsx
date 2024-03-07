@@ -48,24 +48,8 @@ import {
     useEffect(() => {
       checkToken()
     }, []);
-    async function customerRegister() {
-      try {
-        setLoading(true);
-  
 
-      } catch (error) {
-        toast({
-          title: "Network Error",
-  
-          status: "error",
-          position: "top",
-          duration: 5000,
-          isClosable: true
-        })
-        navigate(RoutesPath.HOME)
-      }
-    }
-    async function customerRegisteration() {
+    async function customerRegister() {
       try {
         setLoading(true);
   
@@ -208,7 +192,7 @@ import {
                   />
                 </FormControl>
                 <Stack spacing={6} textAlign={'center'} >
-                  <Button colorScheme={'blue'} variant={'solid'} onClick={()=>{customerRegisteration()}}>
+                  <Button colorScheme={'blue'} variant={'solid'} onClick={()=>{customerRegister()}}>
                     Register
                   </Button>
                   <Link to={RoutesPath.CUSTOMER_LOGIN}>
