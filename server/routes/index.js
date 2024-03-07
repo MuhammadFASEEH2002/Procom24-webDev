@@ -23,6 +23,10 @@ router.post('/customer/login', AuthController.customerLogin)
 router.get('/merchant/get-me', verifyMerchantToken , MerchantController.getMe)
 router.post('/merchant/get-customer-data', verifyMerchantToken , MerchantController.getCustomerData)
 router.post('/merchant/payment-request', verifyMerchantToken , MerchantController.paymentRequest)
+router.post('/merchant/edit-payment-request', verifyMerchantToken , MerchantController.editRequest)
+router.post('/merchant/delete-payment-request', verifyMerchantToken , MerchantController.deleteRequest)
+
+
 
 
 

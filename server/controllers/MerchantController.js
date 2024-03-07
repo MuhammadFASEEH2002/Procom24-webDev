@@ -35,6 +35,16 @@ exports.getCustomerData = async (req, res) => {
 }
 exports.paymentRequest = async (req, res) => {
     try {
+        const amountRegex = /^[0-9]+$/;
+        if (
+            !amountRegex.test(req.body.amount)
+        ) {
+            res.json({
+                message: "Only numbers are allowed in amount",
+                status: false,
+            });
+            return;
+        }
         if (req.body.customerAccountNumber || req.body.merchantAccountNumber || req.body.amount || req.body.customerId || req.body.purpose) {
             await Transaction.create({
                 customer_account_number: req.body.customerAccountNumber,
@@ -43,9 +53,10 @@ exports.paymentRequest = async (req, res) => {
                 amount: req.body.amount,
                 merchant_id: req.user,
                 customer_id: req.body.customerId,
-                purpose: req.bosy.purpose
+                purpose: req.bosy.purpose,
+                isActive: true
             })
-            res.json({ message: "Request created", status: true });
+            res.json({ message: " Payment request created", status: true });
 
         } else {
             res.json({ message: "empty fields", status: false });
@@ -54,5 +65,36 @@ exports.paymentRequest = async (req, res) => {
 
     } catch (error) {
         res.json({ message: "error", status: false });
+    }
+}
+exports.editRequest = async (req, res) => {
+    try {
+        const amountRegex = /^[0-9]+$/;
+        if (
+            !amountRegex.test(req.body.amount)
+        ) {
+            res.json({
+                message: "Only numbers are allowed in amount",
+                status: false,
+            });
+            return;
+        }
+        if (req.body.amount) {
+            await Transaction.findByIdAndUpdate({ _id: req.body.transaction_id }, { amount: req.body.amount })
+            res.json({ message: " Payment request updated", status: true });
+        }
+    } catch (error) {
+        res.json({ message: "error", status: false });
+    }
+}
+
+exports.deleteRequest = async (req, res) => {
+    try {
+        await Transaction.findByIdAndUpdate({ _id: req.body.transaction_id }, { isActive: false })
+        res.json({ message: " Payment request deleted", status: true });
+    }
+    catch (error) {
+        res.json({ message: "error", status: false });
+
     }
 }
