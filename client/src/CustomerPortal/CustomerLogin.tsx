@@ -14,8 +14,9 @@ import {
 } from '@chakra-ui/react'
 import { useEffect, useState } from 'react';
 import api from '../utils/api';
-import { useNavigate } from 'react-router-dom';
+import { Routes, useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
+import RoutesPath from '../utils/routes';
 
 
 const CustomerLogin = () => {
@@ -35,7 +36,7 @@ const CustomerLogin = () => {
     // const customerToken = cookies.customerToken;
 
     if (customerToken) {
-      navigate('/customer/dashboard');
+      navigate(RoutesPath.CUSTOMER_DASHBOARD);
     }
     else {
       // console.log("no token")
@@ -61,7 +62,7 @@ const CustomerLogin = () => {
             duration: 5000,
             isClosable: true
           })
-          navigate("/customer/dashboard")
+          navigate(RoutesPath.CUSTOMER_DASHBOARD)
         } else {
           toast({
             title: "Auth Error",
@@ -92,7 +93,7 @@ const CustomerLogin = () => {
         duration: 5000,
         isClosable: true
       })
-      navigate('/')
+      navigate(RoutesPath.HOME)
     }
   }
 

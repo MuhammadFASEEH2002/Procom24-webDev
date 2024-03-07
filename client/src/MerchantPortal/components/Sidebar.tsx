@@ -40,6 +40,7 @@ import api from '../../utils/api'
 import { UserType } from '../../utils/types'
 import { useCookies } from 'react-cookie'
 
+import RoutesPath from '../../utils/routes'
 
 interface LinkItemProps {
   name: string
@@ -61,12 +62,12 @@ interface SidebarProps extends BoxProps {
 }
 
 const LinkItems: Array<LinkItemProps> = [
-  { name: 'Home', icon: FiHome, link: "/merchant/dashboard" },
-  { name: 'Payments', icon: FiDollarSign, link: "/merchant/payment-request" },
-  { name: 'Customers', icon: FiUsers, link: "/merchant/payment-request" },
-  { name: 'Payment Request', icon: IoCreateOutline, link: "/merchant/payment-request" },
-  { name: 'Report', icon: FiColumns, link: "/merchant/payment-request" },
-  { name: 'Logout', icon: CiLogout, link: "/merchant/logout" },
+  { name: 'Home', icon: FiHome, link: RoutesPath.MERCHANT_DASHBOARD },
+  { name: 'Payments', icon: FiDollarSign, link: RoutesPath.MERCHANT_PAYMENTS },
+  { name: 'Customers', icon: FiUsers, link: RoutesPath.MERCHANT_CUSTOMERS },
+  { name: 'Payment Request', icon: IoCreateOutline, link: RoutesPath.MERCHANT_PAYMENT_REQUEST },
+  { name: 'Report', icon: FiColumns, link: RoutesPath.MERCHANT_REPORT },
+  { name: 'Logout', icon: CiLogout, link: RoutesPath.CUSTOMER_LOGOUT },
 
 
 ]
@@ -247,7 +248,7 @@ const Sidebar = ({ children }: SidebarMainProps) => {
   async function checkToken() {
     const token = await cookies.merchantToken
     if (!token) {
-      navigate('/merchant/login')
+      navigate(RoutesPath.MERCHANT_LOGIN)
     }
   }
 

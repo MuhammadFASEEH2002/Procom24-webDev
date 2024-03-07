@@ -37,7 +37,7 @@ import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { CiLogout } from "react-icons/ci";
 import api from '../../utils/api'
-
+import RoutesPath from '../../utils/routes'
 
 interface LinkItemProps {
   name: string
@@ -59,8 +59,8 @@ interface SidebarProps extends BoxProps {
 }
 
 const LinkItems: Array<LinkItemProps> = [
-  { name: 'Home', icon: FiHome, link: "/customer/dashboard" },
-  { name: 'Logout', icon: CiLogout, link: "/customer/logout" },
+  { name: 'Home', icon: FiHome, link: RoutesPath.CUSTOMER_DASHBOARD },
+  { name: 'Logout', icon: CiLogout, link: RoutesPath.CUSTOMER_LOGOUT },
 
 ]
 
@@ -227,27 +227,19 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     </Flex>
   )
 }
-// interface SidebarProps {
-//   children: ReactNode;
-// }
 const Sidebar = ({ children }: SidebarProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [cookies] = useCookies();
   const navigate = useNavigate();
 
-  //@ts-ignore
   async function checkToken() {
     const token = await cookies.customerToken
     if (!token) {
-      navigate('/customer/login')
-    } else {
-      // console.log(token)
+      navigate(RoutesPath.CUSTOMER_LOGIN)
     }
-
   }
 
   useEffect(() => {
-    // Effect function
     checkToken()
   }, []);
 

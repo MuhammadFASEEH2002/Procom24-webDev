@@ -16,7 +16,7 @@ import { useEffect, useState } from 'react';
 import api from '../utils/api';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-
+import RoutesPath from '../utils/routes';
 
 const MerchantLogin = () => {
   const [username, setUsername] = useState<string>("");
@@ -35,7 +35,7 @@ const MerchantLogin = () => {
     // const customerToken = cookies.customerToken;
 
     if (merchantToken) {
-      navigate('/merchant/dashboard');
+      navigate(RoutesPath.MERCHANT_DASHBOARD);
     }
     else {
       // console.log("no token")
@@ -62,7 +62,7 @@ const MerchantLogin = () => {
             duration: 5000,
             isClosable: true
           })
-          navigate("/merchant/dashboard")
+          navigate(RoutesPath.MERCHANT_DASHBOARD)
         } else {
           toast({
             title: "Auth Error",
@@ -93,7 +93,7 @@ const MerchantLogin = () => {
         duration: 5000,
         isClosable: true
       })
-      navigate('/')
+      navigate(RoutesPath.HOME)
     }
   }
 
