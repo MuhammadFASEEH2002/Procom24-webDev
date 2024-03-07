@@ -17,6 +17,7 @@ router.post('/customer/login', AuthController.customerLogin)
 
 
 // merchant routes
+router.get('/merchant/export/payments', verifyMerchantToken ,MerchantController.exportPayments)
 router.get('/merchant/get-me', verifyMerchantToken, MerchantController.getMe)
 router.get('/merchant/get-all-customer-data', verifyMerchantToken, MerchantController.getAllCustomers)
 router.post('/merchant/get-customer-data', verifyMerchantToken, MerchantController.getCustomerData)

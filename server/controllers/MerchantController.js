@@ -128,3 +128,29 @@ exports.getMyRequests = async (req, res) => {
 
     }
 }
+
+
+var writeCSV = require('write-csv')
+exports.exportPayments = async (req, res) => {
+    try {
+        const myTransactions = await Transaction.find({ merchant_id: req.user }).populate(
+            "customer_id"
+        );
+        const modifiedTransactions = myTransactions.map(transaction => {
+            const { name, bankname } = transaction.customer_id.toObject();
+            delete transaction.customer_id;
+            return {
+                name,
+                bankname,
+                ...transaction.toObject()
+            };
+        });
+        writeCSV('./public/payments.csv', modifiedTransactions)
+          res.json({  status: true });
+    }
+    catch (error) {
+        res.json({ message: error.message, status: false });
+
+    }
+}
+
