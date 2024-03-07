@@ -21,7 +21,7 @@ import { useCookies } from 'react-cookie';
 const CustomerLogin = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast()
   const navigate = useNavigate()
   const [cookies] = useCookies();
@@ -42,7 +42,6 @@ const CustomerLogin = () => {
     }
   }
   useEffect(() => {
-    // Effect function
     checkToken()
   }, []);
   async function customerLogin() {
