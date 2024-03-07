@@ -33,7 +33,7 @@ import {
   FiColumns
 } from 'react-icons/fi'
 import { IconType } from 'react-icons'
-import { CiLogout , } from 'react-icons/ci'
+import { CiLogout, } from 'react-icons/ci'
 import { IoCreateOutline } from 'react-icons/io5'
 import { Link, useNavigate } from 'react-router-dom'
 import api from '../../utils/api'
@@ -45,12 +45,14 @@ import RoutesPath from '../../utils/routes'
 interface LinkItemProps {
   name: string
   icon: IconType,
-  link: string
+  link: string,
+  active: boolean
 }
 
 interface NavItemProps extends FlexProps {
   icon: IconType
   children: React.ReactNode
+  active: boolean
 }
 
 interface MobileProps extends FlexProps {
@@ -58,21 +60,20 @@ interface MobileProps extends FlexProps {
 }
 
 interface SidebarProps extends BoxProps {
-  onClose: () => void
+  onClose: () => void,
+  current : string
 }
 
 const LinkItems: Array<LinkItemProps> = [
-  { name: 'Home', icon: FiHome, link: RoutesPath.MERCHANT_DASHBOARD },
-  { name: 'Payments', icon: FiDollarSign, link: RoutesPath.MERCHANT_PAYMENTS },
-  { name: 'Customers', icon: FiUsers, link: RoutesPath.MERCHANT_CUSTOMERS },
-  { name: 'Payment Request', icon: IoCreateOutline, link: RoutesPath.MERCHANT_PAYMENT_REQUEST },
-  { name: 'Report', icon: FiColumns, link: RoutesPath.MERCHANT_REPORT },
-  { name: 'Logout', icon: CiLogout, link: RoutesPath.MERCHANT_LOGOUT },
-
-
+  { name: 'Home', icon: FiHome, link: RoutesPath.MERCHANT_DASHBOARD, active: true },
+  { name: 'Payments', icon: FiDollarSign, link: RoutesPath.MERCHANT_PAYMENTS, active: false },
+  { name: 'Customers', icon: FiUsers, link: RoutesPath.MERCHANT_CUSTOMERS, active: false },
+  { name: 'Payment Request', icon: IoCreateOutline, link: RoutesPath.MERCHANT_PAYMENT_REQUEST, active: false },
+  { name: 'Report', icon: FiColumns, link: RoutesPath.MERCHANT_REPORT, active: false },
+  { name: 'Logout', icon: CiLogout, link: RoutesPath.MERCHANT_LOGOUT, active: false },
 ]
 
-const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+const SidebarContent = ({ onClose, current, ...rest }: SidebarProps) => {
   return (
     <Box
       transition="3s ease"
@@ -91,7 +92,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       </Flex>
       {LinkItems.map((link) => (
         <Link to={link.link}>
-          <NavItem key={link.name} icon={link.icon}>
+          <NavItem key={link.name} icon={link.icon} active={link.name === current} >
             {link.name}
           </NavItem>
         </Link>
@@ -100,11 +101,13 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   )
 }
 
-const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
+const NavItem = ({ icon, active, children, ...rest }: NavItemProps) => {
   return (
     <Box
       style={{ textDecoration: 'none' }}
-      _focus={{ boxShadow: 'none' }}>
+      _focus={{ boxShadow: 'none' }}
+     
+    >
       <Flex
         align="center"
         p="4"
@@ -116,6 +119,9 @@ const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
           bg: 'purple.400',
           color: 'white',
         }}
+        bg={active ? 'purple.400' : 'white'}
+        color={active ? 'white' : 'black'}
+
         {...rest}>
         {icon && (
           <Icon
@@ -193,7 +199,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       </Text>
 
       <HStack spacing={{ base: '0', md: '6' }}>
-       
+
         <Flex alignItems={'center'}>
           <Menu>
             <MenuButton py={2} transition="all 0.3s" _focus={{ boxShadow: 'none' }}>
@@ -211,10 +217,10 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                   ml="2">
                   <Text fontSize="sm">{user?.name}</Text>
                   <Text fontSize="xs" color="gray.600">
-                   Merchant
+                    Merchant
                   </Text>
                 </VStack>
-         
+
               </HStack>
             </MenuButton>
           </Menu>
@@ -225,10 +231,11 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 }
 
 interface SidebarMainProps {
-  children: React.ReactNode
+  children: React.ReactNode,
+  active : string
 }
 
-const Sidebar = ({ children }: SidebarMainProps) => {
+const Sidebar = ({ children, active }: SidebarMainProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const [cookies] = useCookies();
@@ -247,7 +254,7 @@ const Sidebar = ({ children }: SidebarMainProps) => {
 
   return (
     <Box minH="100vh" bg={useColorModeValue('white.500', 'gray.900')}>
-      <SidebarContent onClose={() => onClose} display={{ base: 'none', md: 'block' }} />
+      <SidebarContent onClose={() => onClose} display={{ base: 'none', md: 'block' }} current={active} />
       <Drawer
         isOpen={isOpen}
         placement="left"
@@ -256,7 +263,7 @@ const Sidebar = ({ children }: SidebarMainProps) => {
         onOverlayClick={onClose}
         size="full">
         <DrawerContent>
-          <SidebarContent onClose={onClose} />
+          <SidebarContent onClose={onClose} current={active} />
         </DrawerContent>
       </Drawer>
       {/* mobilenav */}

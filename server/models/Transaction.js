@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const TransactionSchema = new mongoose.Schema({
     customer_account_number: { type: String, required: true },
     merchant_acoount_number: { type: String, required: true },
-    status: { type: String, required: true },
+    status: { type: String, required: true , enums : ['approved', 'pending' , 'canceled'] },
     amount: { type: String, required: true },
     merchant_id: { type: String, required: true, ref: "merchant" },
     customer_id: { type: String, required: true, ref: "customer" },

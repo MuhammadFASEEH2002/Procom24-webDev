@@ -14,7 +14,7 @@ import { FaCheck } from "react-icons/fa";
 const MerchantDashboard = () => {
   return (
     <>
-      <Sidebar>
+      <Sidebar active="Home" >
 
         <HStack justifyContent={'space-evenly'} my={5} >
           <StatCard colorscheme="purple" title="All Payments" recordsCount={234} amount={2345} icon={<IoGrid />} />

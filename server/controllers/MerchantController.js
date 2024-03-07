@@ -62,7 +62,7 @@ exports.paymentRequest = async (req, res) => {
                 amount: req.body.amount,
                 merchant_id: req.user,
                 customer_id: req.body.customerId,
-                purpose: req.bosy.purpose,
+                purpose: req.body.purpose,
                 isActive: true
             })
             res.json({ message: " Payment request created", status: true });
@@ -110,13 +110,13 @@ exports.deleteRequest = async (req, res) => {
 
 exports.getMyRequests = async (req, res) => {
     try {
-        const myTransactions = await Transactions.find({ merchant_id: req.user }).populate(
+        const myTransactions = await Transaction.find({ merchant_id: req.user }).populate(
             "customer"
         );
         res.json({ message: " Transactions fetched", status: true , myTransactions});
     }
     catch (error) {
-        res.json({ message: "error", status: false });
+        res.json({ message: error.message, status: false });
 
     }
 }

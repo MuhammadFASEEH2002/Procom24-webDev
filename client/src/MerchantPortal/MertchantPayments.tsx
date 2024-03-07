@@ -35,7 +35,7 @@ const tableData = [
 export default function MerchantPayments() {
     return (
         <>
-            <Sidebar>
+            <Sidebar active="Payments" >
                 <HStack justifyContent={'space-between'}>
                     <Heading>Payments</Heading>
                     <HStack>

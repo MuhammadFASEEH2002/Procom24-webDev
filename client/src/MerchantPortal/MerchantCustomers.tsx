@@ -3,158 +3,16 @@ import Sidebar from "./components/Sidebar"
 import JTable from "../components/Table"
 import { useEffect, useState } from "react"
 import api from "../utils/api"
+import { CustomerDataType } from "../utils/types"
 
+const tableHeads = ['customer', 'email', 'phone', 'bank', 'accountnumber']
 
-const tableHeads = ['customer', 'email', 'phone', 'bank', 'created At',]
-const heads = ['customer', 'email', 'phone', 'bank', 'createdAt']
-const tableData = [
-    {
-        customer: 'John Doe',
-        email: 'JohnDoe@gmail.com',
-        phone: '+923161234567',
-        bank: 'Meezan Bank',
-        createdAt: '12/12/2021',
-    },
-    {
-        customer: 'Faseeh',
-        email: 'JohnDoe@gmail.com',
-        phone: '+923161234567',
-        bank: 'Meezan Bank',
-        createdAt: '12/12/2021',
-    },
-    {
-        customer: 'Faiez',
-        email: 'JohnDoe@gmail.com',
-        phone: '+923161234567',
-        bank: 'Meezan Bank',
-        createdAt: '12/12/2021',
-    },
-    {
-        customer: 'John Doe',
-        email: 'JohnDoe@gmail.com',
-        phone: '+923161234567',
-        bank: 'Meezan Bank',
-        createdAt: '12/12/2021',
-    },
-    {
-        customer: 'Faseeh',
-        email: 'JohnDoe@gmail.com',
-        phone: '+923161234567',
-        bank: 'Meezan Bank',
-        createdAt: '12/12/2021',
-    },
-    {
-        customer: 'Faiez',
-        email: 'JohnDoe@gmail.com',
-        phone: '+923161234567',
-        bank: 'Meezan Bank',
-        createdAt: '12/12/2021',
-    },
-    {
-        customer: 'John Doe',
-        email: 'JohnDoe@gmail.com',
-        phone: '+923161234567',
-        bank: 'Meezan Bank',
-        createdAt: '12/12/2021',
-    },
-    {
-        customer: 'Faseeh',
-        email: 'JohnDoe@gmail.com',
-        phone: '+923161234567',
-        bank: 'Meezan Bank',
-        createdAt: '12/12/2021',
-    },
-    {
-        customer: 'Faiez',
-        email: 'JohnDoe@gmail.com',
-        phone: '+923161234567',
-        bank: 'Meezan Bank',
-        createdAt: '12/12/2021',
-    },
-    {
-        customer: 'John Doe',
-        email: 'JohnDoe@gmail.com',
-        phone: '+923161234567',
-        bank: 'Meezan Bank',
-        createdAt: '12/12/2021',
-    },
-    {
-        customer: 'Faseeh',
-        email: 'JohnDoe@gmail.com',
-        phone: '+923161234567',
-        bank: 'Meezan Bank',
-        createdAt: '12/12/2021',
-    },
-    {
-        customer: 'Faiez',
-        email: 'JohnDoe@gmail.com',
-        phone: '+923161234567',
-        bank: 'Meezan Bank',
-        createdAt: '12/12/2021',
-    },
-    {
-        customer: 'John Doe',
-        email: 'JohnDoe@gmail.com',
-        phone: '+923161234567',
-        bank: 'Meezan Bank',
-        createdAt: '12/12/2021',
-    },
-    {
-        customer: 'Faseeh',
-        email: 'JohnDoe@gmail.com',
-        phone: '+923161234567',
-        bank: 'Meezan Bank',
-        createdAt: '12/12/2021',
-    },
-    {
-        customer: 'Faiez',
-        email: 'JohnDoe@gmail.com',
-        phone: '+923161234567',
-        bank: 'Meezan Bank',
-        createdAt: '12/12/2021',
-    },
-    {
-        customer: 'John Doe',
-        email: 'JohnDoe@gmail.com',
-        phone: '+923161234567',
-        bank: 'Meezan Bank',
-        createdAt: '12/12/2021',
-    },
-    {
-        customer: 'Faseeh',
-        email: 'JohnDoe@gmail.com',
-        phone: '+923161234567',
-        bank: 'Meezan Bank',
-        createdAt: '12/12/2021',
-    },
-    {
-        customer: 'Faiez',
-        email: 'JohnDoe@gmail.com',
-        phone: '+923161234567',
-        bank: 'Meezan Bank',
-        createdAt: '12/12/2021',
-    },
-    {
-        customer: 'John Doe',
-        email: 'JohnDoe@gmail.com',
-        phone: '+923161234567',
-        bank: 'Meezan Bank',
-        createdAt: '12/12/2021',
-    },
-    {
-        customer: 'Faseeh',
-        email: 'JohnDoe@gmail.com',
-        phone: '+923161234567',
-        bank: 'Meezan Bank',
-        createdAt: '12/12/2021',
-    },
-
-]
 
 
 export default function MerchantCustomers() {
-
-    const [ customers , setCustomers ] = useState([])
+    
+    const [ customers , setCustomers ] = useState<CustomerDataType[] | []>([])
+    const heads = ['name', 'email', 'phonenumber', 'bankname', 'accountnumber']
 
 
     useEffect(()=>{
@@ -164,16 +22,19 @@ export default function MerchantCustomers() {
 
     const loadCustomers = async () => {
         const { data } = await api.get('/api/merchant/get-all-customer-data');
-        console.log(data)
+        const { customer } = data;
+        if(customers){
+            setCustomers(customer);
+        }
     }
 
     return (
         <>
-            <Sidebar>
+            <Sidebar active="Customers">
                 <HStack p={4} mb={4}>
                     <Heading>Customers</Heading>
                 </HStack>
-                <JTable tableHeads={tableHeads} tableData={tableData} heads={heads} />
+               {customers.length > 0 && <JTable tableHeads={tableHeads} tableData={customers} heads={heads} />}
             </Sidebar>
         </>
     )

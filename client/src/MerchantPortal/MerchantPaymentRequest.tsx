@@ -69,7 +69,7 @@ const MerchantPaymentRequest = () => {
   }
   return (
     <>
-      <Sidebar  >
+      <Sidebar active='Payment Request'  >
         {loading ? (<></>) : (<>
           <Stack alignItems={"center"} justifyContent={"center"}>
             <Card width={"80%"}>
