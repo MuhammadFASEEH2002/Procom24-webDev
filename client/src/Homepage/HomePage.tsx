@@ -4,7 +4,7 @@ import {
   Heading,
   Text,
   Icon,
-  IconProps,Stack
+  IconProps,Stack, Image
 } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import Navbar from './components/Navbar'
@@ -29,9 +29,9 @@ const Homepage = () => {
             fontWeight={600}
             fontSize={{ base: '3xl', sm: '4xl', md: '6xl' }}
             lineHeight={'110%'}>
-            Meeting scheduling{' '}
-            <Text as={'span'} color={'orange.400'}>
-              made easy
+            Business Payments{' '}
+            <Text as={'span'} color={'purple.400'}>
+              Made Easy
             </Text>
           </Heading>
           <Text color={'gray.500'} maxW={'3xl'}>
@@ -40,20 +40,16 @@ const Homepage = () => {
             every morning.
           </Text>
           <Stack spacing={6} direction={'row'}>
-            <Button
-              rounded={'full'}
-              px={6}
-              colorScheme={'orange'}
-              bg={'orange.400'}
-              _hover={{ bg: 'orange.500' }}>
-              Get started
+          <Button rounded={'full'} px={6} bg={"purple.300"}   _hover={{ bg: 'purple.500' }} color={"white"}>
+              Customer
             </Button>
-            <Button rounded={'full'} px={6}>
-              Learn more
+            <Button rounded={'full'} px={6} bg={"purple.500"}   _hover={{ bg: 'purple.600' }} color={"white"}>
+              Merchant
             </Button>
           </Stack>
           <Flex w={'full'}>
             {/* <Illustration height={{ sm: '24rem', lg: '28rem' }} mt={{ base: 12, sm: 16 }} /> */}
+            <Image src='../../src/assets/ani'></Image>
           </Flex>
         </Stack>
       </Container>
