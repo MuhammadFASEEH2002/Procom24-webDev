@@ -96,14 +96,20 @@ const MerchantPaymentRequest = () => {
     }
   }
 
-
-
   useEffect(() => {
+    if(paymentRequestSent){
+      generateQrCode()
+    }
+  }, [paymentRequestSent])
+
+
+  const generateQrCode = () => {
     const qrCode = new QRCodeStyling({
       width: 300,
       height: 300,
-      data: 'Hello World',
-      image: 'https://placehold.co/600x400/orange/white?text=PayEaze',
+      data: JSON.stringify({
+        customerEmail,customerUsername,customerAccountNumber,merchantAccountNumber,bankname,customerid
+      }),
       dotsOptions: {
         color: '#ba55d3',
         type: 'square'
@@ -121,8 +127,7 @@ const MerchantPaymentRequest = () => {
       console.log(qr.current.innerHTML = '')
     }
     qrCode.append(qr.current)
-
-  }, [])
+  }
 
   return (
     <>
@@ -162,6 +167,9 @@ const MerchantPaymentRequest = () => {
                       <FormLabel>Purpose of Payment</FormLabel>
                       <Input type='text' onChange={(event) => handleInputChange(event, setPurpose)} />
                     </Stack>
+                    <Stack width={"45%"} mb={5}>
+
+                    </Stack>
                     <Button colorScheme='purple' onClick={reqPayment.bind(null, customerid)} >Request Payment</Button>
 
                   </>) : (<>
@@ -185,14 +193,16 @@ const MerchantPaymentRequest = () => {
 
 
                 </FormControl>
+                {paymentRequestSent && <Stack justify={'center'} alignItems={'center'}>
+                  <Heading>Payment Request Sent</Heading>
+                  <div ref={qr} ></div>
+                </Stack>}
               </CardBody>
             </Card>
           </Stack>
         </>)}
-        {paymentRequestSent && <Stack justify={'center'} alignItems={'center'}>
-          <Heading>Payment Request Sent</Heading>
-          {/* <div ref={qr} ></div> */}
-        </Stack>}
+
+
       </Sidebar>
     </>
   )
