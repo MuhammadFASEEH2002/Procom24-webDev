@@ -55,7 +55,7 @@ export default function MerchantPayments() {
                     <StatCard colorscheme="yellow" title="Pending" recordsCount={234} amount={3434} icon={<IoTimerOutline />} />
                     <StatCard colorscheme="red" title="Rejected" recordsCount={234} amount={3434} icon={<MdCancel />} />
                 </HStack>
-                <JTable tableData={tableData} tableHeads={tableHeads} heads={heads} />
+                <JTable tableData={tableData} tableHeads={tableHeads} heads={heads} size="sm" />
             </Sidebar>
         </>
     )

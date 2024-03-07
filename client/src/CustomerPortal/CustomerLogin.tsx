@@ -36,10 +36,7 @@ const CustomerLogin = () => {
     // const customerToken = cookies.customerToken;
 
     if (customerToken) {
-      navigate(RoutesPath.CUSTOMER_DASHBOARD);
-    }
-    else {
-      // console.log("no token")
+      navigate(RoutesPath.CUSTOMER_PAYMENTS);
     }
   }
   useEffect(() => {
@@ -62,7 +59,7 @@ const CustomerLogin = () => {
             duration: 5000,
             isClosable: true
           })
-          navigate(RoutesPath.CUSTOMER_DASHBOARD)
+          navigate(RoutesPath.CUSTOMER_PAYMENTS)
         } else {
           toast({
             title: "Auth Error",

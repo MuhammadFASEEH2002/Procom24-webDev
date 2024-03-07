@@ -61,9 +61,7 @@ interface SidebarProps extends BoxProps {
 }
 
 const LinkItems: Array<LinkItemProps> = [
-  { name: 'Home', icon: FiHome, link: RoutesPath.CUSTOMER_DASHBOARD },
   { name: 'Payments', icon: FiDollarSign, link: RoutesPath.CUSTOMER_PAYMENTS },
-  { name: 'Instant Payment', icon: FaCircleDollarToSlot, link: RoutesPath.CUSTOMER_SEND_PAYMENTS },
   { name: 'Logout', icon: CiLogout, link: RoutesPath.CUSTOMER_LOGOUT },
 
 ]
