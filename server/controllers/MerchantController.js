@@ -35,15 +35,24 @@ exports.getCustomerData = async (req, res) => {
 }
 exports.paymentRequest = async (req, res) => {
     try {
-        // const customerData = await Customer.findOne({ username: req.body.customerUsername })
-        // const merchantData = await Merchant.findOne({ _id: req.user })
-        // if (customerData && merchantData) {
-        //     res.json({ message: "User found", status: true, customerData, merchantData });
-        // }
-        // else {
-        //     res.json({ message: "User not found", status: false });
-        // }
+        if (req.body.customerAccountNumber || req.body.merchantAccountNumber || req.body.amount || req.body.customerId || req.body.purpose) {
+            await Transaction.create({
+                customer_account_number: req.body.customerAccountNumber,
+                merchant_account_number: req.body.merchantAccountNumber,
+                status: "pending",
+                amount: req.body.amount,
+                merchant_id: req.user,
+                customer_id: req.body.customerId,
+                purpose: req.bosy.purpose
+            })
+            res.json({ message: "Request created", status: true });
+
+        } else {
+            res.json({ message: "empty fields", status: false });
+
+        }
+
     } catch (error) {
-        // res.json({ message: "error", status: false });
+        res.json({ message: "error", status: false });
     }
 }
