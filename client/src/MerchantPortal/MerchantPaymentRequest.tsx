@@ -191,7 +191,7 @@ const MerchantPaymentRequest = () => {
         </>)}
         {paymentRequestSent && <Stack justify={'center'} alignItems={'center'}>
           <Heading>Payment Request Sent</Heading>
-          <div ref={qr} ></div>
+          {/* <div ref={qr} ></div> */}
         </Stack>}
       </Sidebar>
     </>

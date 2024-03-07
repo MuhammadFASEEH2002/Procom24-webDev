@@ -85,13 +85,25 @@ export default function MerchantPayments() {
         }
     }
 
+    const exportPayment  = async () =>{
+        const { data } = await api.get('/api/merchant/export/payments/')
+        console.log(data)
+        const a = document.createElement('a')
+        a.href = `${process.env.AXIOS_LINK}/static/payments.csv`
+        a.download = 'payments.csv'
+        a.click()
+    } 
+
     return (
         <>
             <Sidebar active="Payments" >
                 <HStack justifyContent={'space-between'}>
                     <Heading>Payments</Heading>
                     <HStack>
-                        <Button colorScheme={'purple'} variant={'outline'} leftIcon={<FaDownload />}>
+                        <Button colorScheme={'purple'} variant={'outline'} leftIcon={<FaDownload />}
+                        
+                        onClick={exportPayment}
+                        >
                             Export
                         </Button>
                         <Link to={RoutesPath.MERCHANT_PAYMENT_REQUEST}>

@@ -5,7 +5,7 @@ const env = require('dotenv').config();
 const cors = require("cors");
 const IndexRouter = require('./routes/index.js')
 const cookieParser = require("cookie-parser");
-
+const path = require('path')
 
 
 app.use(
@@ -24,6 +24,8 @@ mongoose
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
+app.use("/static" , express.static(path.join(__dirname, "/public/")));
 app.use("/api", IndexRouter);
 app.get("/", (req, res) => {
   res.json("hello")
