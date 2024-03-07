@@ -33,7 +33,7 @@ import {
   FiColumns
 } from 'react-icons/fi'
 import { IconType } from 'react-icons'
-import { CiLogout , CiDollar } from 'react-icons/ci'
+import { CiLogout , } from 'react-icons/ci'
 import { IoCreateOutline } from 'react-icons/io5'
 import { Link, useNavigate } from 'react-router-dom'
 import api from '../../utils/api'

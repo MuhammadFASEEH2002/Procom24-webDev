@@ -14,8 +14,9 @@ import MerchantLogout from './MerchantPortal/MerchantLogout';
 
 import CustomerLogin from './CustomerPortal/CustomerLogin';
 import CustomerDashboard from './CustomerPortal/CustomerDashboard';
-import CustomerRegisteration from './CustomerPortal/CustomerRegisteration';
+import CustomerRegister from './CustomerPortal/CustomerRegister';
 import CustomerLogout from './CustomerPortal/CustomerLogout';
+import CustomerPayments from './CustomerPortal/CustomerPayments';
 
 
 import RoutesPath from './utils/routes';
@@ -38,7 +39,8 @@ function App() {
 
           {/* Customer Routes */}
           <Route path={RoutesPath.CUSTOMER_LOGIN} element={<CustomerLogin />} />
-          <Route path={RoutesPath.CUSTOMER_REGISTER} element={<CustomerRegisteration />} />
+          <Route path={RoutesPath.CUSTOMER_REGISTER} element={<CustomerRegister />} />
+          <Route path={RoutesPath.CUSTOMER_PAYMENTS} element={<CustomerPayments />} />
 
           <Route path={RoutesPath.CUSTOMER_DASHBOARD} element={<CustomerDashboard />} />
           <Route path={RoutesPath.CUSTOMER_LOGOUT} element={<CustomerLogout />} />

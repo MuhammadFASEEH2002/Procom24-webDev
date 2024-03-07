@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react'
 import { useEffect, useState } from 'react';
 import api from '../utils/api';
-import { Routes, useNavigate } from 'react-router-dom';
+import { Link, Routes, useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import RoutesPath from '../utils/routes';
 
@@ -128,7 +128,7 @@ const CustomerLogin = () => {
                   }}
                 />
               </FormControl>
-              <Stack spacing={6}>
+              <Stack spacing={6} textAlign={'center'}>
                 <Stack
                   direction={{ base: 'column', sm: 'row' }}
                   align={'start'}
@@ -139,6 +139,9 @@ const CustomerLogin = () => {
                 <Button colorScheme={'blue'} variant={'solid'} onClick={() => { customerLogin() }}>
                   Sign in
                 </Button>
+                <Link to={RoutesPath.CUSTOMER_REGISTER}  >
+                  <Text textDecor={'underline'} >Dont Have An Account? Create One</Text>
+                </Link>
               </Stack>
             </Stack>
           </Flex>

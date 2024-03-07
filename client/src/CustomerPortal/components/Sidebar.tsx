@@ -36,6 +36,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { CiLogout } from "react-icons/ci";
+import { FiDollarSign } from 'react-icons/fi'
+import { FaCircleDollarToSlot } from "react-icons/fa6"
 import api from '../../utils/api'
 import RoutesPath from '../../utils/routes'
 
@@ -59,7 +61,9 @@ interface SidebarProps extends BoxProps {
 }
 
 const LinkItems: Array<LinkItemProps> = [
-  { name: 'Home', icon: FiHome, link: RoutesPath.CUSTOMER_DASHBOARD },
+  { name: 'Payments', icon: FiHome, link: RoutesPath.CUSTOMER_DASHBOARD },
+  { name: 'Payments', icon: FiDollarSign, link: RoutesPath.CUSTOMER_PAYMENTS },
+  { name: 'Instant Payment', icon: FaCircleDollarToSlot, link: RoutesPath.CUSTOMER_SEND_PAYMENTS },
   { name: 'Logout', icon: CiLogout, link: RoutesPath.CUSTOMER_LOGOUT },
 
 ]
@@ -227,7 +231,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     </Flex>
   )
 }
-const Sidebar = ({ children }: SidebarProps) => {
+const Sidebar = ({ children } : { children: React.ReactNode }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [cookies] = useCookies();
   const navigate = useNavigate();

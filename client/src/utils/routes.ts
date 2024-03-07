@@ -13,6 +13,8 @@ export default class RoutesPath {
     static CUSTOMER_REGISTER = '/customer/register';
     static CUSTOMER_DASHBOARD = '/customer/dashboard';
     static CUSTOMER_LOGOUT = '/customer/logout';
+    static CUSTOMER_PAYMENTS = '/customer/payments/view';
+    static CUSTOMER_SEND_PAYMENTS = '/customer/payments/send';
 
     // to be implemented routes
     static MERCHANT_PAYMENT_REQUEST_VIEW = '/merchant/payment-request/view';
