@@ -15,11 +15,14 @@ import RoutesPath from "../utils/routes.ts"
 const MerchantDashboard = () => {
   const [totalAmount, setTotalAmount] = useState<string>("")
   const [payedAmount, setPayedAmount] = useState<string>("")
-
   const [rejectAmount, setRejectAmount] = useState<string>("")
-
   const [pendingAmount, setPendingAmount] = useState<string>("")
   const [transactionCount, setTransactionCount] = useState<string>("")
+
+  const [approvedTransactionCount, setApprovedTransactionCount] = useState<string>("")
+  const [rejectTransactionCount, setRejectTransactionCount] = useState<string>("")
+  const [pendingTransactionCount, setPendingTransactionCount] = useState<string>("")
+
 
 
   const toast = useToast()
@@ -35,11 +38,13 @@ const MerchantDashboard = () => {
       if (response.data.status) {
         setTotalAmount(response.data.totalAmount)
         setPayedAmount(response.data.payedAmount)
-
         setRejectAmount(response.data.rejectAmount)
-
         setPendingAmount(response.data.pendingAmount)
         setTransactionCount(response.data.totalTransactions)
+
+        setApprovedTransactionCount(response.data.payedTransactions)
+        setRejectTransactionCount(response.data.rejectTransactions)
+        setPendingTransactionCount(response.data.pendingTransactions)
 
       } else {
         toast({
@@ -71,9 +76,9 @@ const MerchantDashboard = () => {
       <Sidebar active="Home" >
         <HStack justifyContent={'space-evenly'} my={5} flexWrap={'wrap'} >
           <StatCard colorscheme="purple" title="All Payments" recordsCount={Number(transactionCount)} amount={Number(totalAmount)} icon={<IoGrid />} />
-          <StatCard colorscheme="green" title="Succeeded" recordsCount={Number(transactionCount)} amount={Number(payedAmount)} icon={<FaCheck />} />
-          <StatCard colorscheme="yellow" title="Pending" recordsCount={Number(transactionCount)} amount={Number(pendingAmount)} icon={<IoTimerOutline />} />
-          <StatCard colorscheme="red" title="Rejected" recordsCount={Number(transactionCount)} amount={Number(rejectAmount)} icon={<MdCancel />} />
+          <StatCard colorscheme="green" title="Succeeded" recordsCount={Number(approvedTransactionCount)} amount={Number(payedAmount)} icon={<FaCheck />} />
+          <StatCard colorscheme="yellow" title="Pending" recordsCount={Number(rejectTransactionCount)} amount={Number(pendingAmount)} icon={<IoTimerOutline />} />
+          <StatCard colorscheme="red" title="Rejected" recordsCount={Number(pendingTransactionCount)} amount={Number(rejectAmount)} icon={<MdCancel />} />
         </HStack>
         <HStack mt={5} mb={5}>
           <Heading>Yearly Income</Heading>

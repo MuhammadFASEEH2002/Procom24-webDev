@@ -26,11 +26,14 @@ export default function MerchantPayments() {
 
     const [totalAmount, setTotalAmount] = useState<string>("")
     const [payedAmount, setPayedAmount] = useState<string>("")
-
     const [rejectAmount, setRejectAmount] = useState<string>("")
-
     const [pendingAmount, setPendingAmount] = useState<string>("")
     const [transactionCount, setTransactionCount] = useState<string>("")
+    const [approvedTransactionCount, setApprovedTransactionCount] = useState<string>("")
+    const [rejectTransactionCount, setRejectTransactionCount] = useState<string>("")
+    const [pendingTransactionCount, setPendingTransactionCount] = useState<string>("")
+
+
 
 
     const toast = useToast()
@@ -44,11 +47,12 @@ export default function MerchantPayments() {
             if (response.data.status) {
                 setTotalAmount(response.data.totalAmount)
                 setPayedAmount(response.data.payedAmount)
-
                 setRejectAmount(response.data.rejectAmount)
-
                 setPendingAmount(response.data.pendingAmount)
                 setTransactionCount(response.data.totalTransactions)
+                setApprovedTransactionCount(response.data.payedTransactions)
+                setRejectTransactionCount(response.data.rejectTransactions)
+                setPendingTransactionCount(response.data.pendingTransactions)
 
             } else {
                 toast({
@@ -84,14 +88,14 @@ export default function MerchantPayments() {
         }
     }
 
-    const exportPayment  = async () =>{
+    const exportPayment = async () => {
         const { data } = await api.get('/api/merchant/export/payments/')
         console.log(data)
         const a = document.createElement('a')
         a.href = `${process.env.AXIOS_LINK}/static/payments.csv`
         a.download = 'payments.csv'
         a.click()
-    } 
+    }
 
     return (
         <>
@@ -100,8 +104,8 @@ export default function MerchantPayments() {
                     <Heading>Payments</Heading>
                     <HStack>
                         <Button colorScheme={'purple'} variant={'outline'} leftIcon={<FaDownload />}
-                        
-                        onClick={exportPayment}
+
+                            onClick={exportPayment}
                         >
                             Export
                         </Button>
@@ -114,9 +118,9 @@ export default function MerchantPayments() {
                 </HStack>
                 <HStack justifyContent={'space-evenly'} my={5} flexWrap={'wrap'} >
                     <StatCard colorscheme="purple" title="All Payments" recordsCount={Number(transactionCount)} amount={Number(totalAmount)} icon={<IoGrid />} />
-                    <StatCard colorscheme="green" title="Succeeded" recordsCount={Number(transactionCount)} amount={Number(payedAmount)} icon={<FaCheck />} />
-                    <StatCard colorscheme="yellow" title="Pending" recordsCount={Number(transactionCount)} amount={Number(pendingAmount)} icon={<IoTimerOutline />} />
-                    <StatCard colorscheme="red" title="Rejected" recordsCount={Number(transactionCount)} amount={Number(rejectAmount)} icon={<MdCancel />} />
+                    <StatCard colorscheme="green" title="Succeeded" recordsCount={Number(approvedTransactionCount)} amount={Number(payedAmount)} icon={<FaCheck />} />
+                    <StatCard colorscheme="yellow" title="Pending" recordsCount={Number(rejectTransactionCount)} amount={Number(pendingAmount)} icon={<IoTimerOutline />} />
+                    <StatCard colorscheme="red" title="Rejected" recordsCount={Number(pendingTransactionCount)} amount={Number(rejectAmount)} icon={<MdCancel />} />
                 </HStack>
                 {transactions.length > 0 && <JTable tableData={transactions} tableHeads={tableHeads} heads={heads} size="sm" />}
             </Sidebar>

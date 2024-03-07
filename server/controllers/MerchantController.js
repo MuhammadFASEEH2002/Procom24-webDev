@@ -158,6 +158,11 @@ exports.getStats=async (req,res)=>{
     try {
         const allTransactions = await Transaction.find({ merchant_id: req.user })
         const totalTransactions = await Transaction.countDocuments({ merchant_id: req.user })
+        const payedTransactions = await Transaction.countDocuments({ merchant_id: req.user ,status:"approved" })
+        const rejectTransactions = await Transaction.countDocuments({ merchant_id: req.user, status:"rejected" })
+        const pendingTransactions = await Transaction.countDocuments({ merchant_id: req.user, status: "pending" })
+
+
     
         // const allTransactions = await Transaction.find({ merchant_id: req.user })
         let totalAmount=0
@@ -179,7 +184,7 @@ exports.getStats=async (req,res)=>{
             }
             )
     
-        res.json({  status: true , totalAmount, payedAmount, rejectAmount, pendingAmount, totalTransactions});
+        res.json({  status: true , totalAmount, payedAmount, rejectAmount, pendingAmount, totalTransactions, payedTransactions, rejectTransactions, pendingTransactions});
     } catch (error) {
         res.json({ message: error.message, status: false });
         
