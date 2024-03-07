@@ -12,6 +12,7 @@ const router = require('express').Router()
 // auth routes
 router.post('/merchant/register', AuthController.merchantRegister)
 router.post('/merchant/login', AuthController.merchantLogin)
+
 router.post('/customer/register', AuthController.customerRegister)
 router.post('/customer/login', AuthController.customerLogin)
 
