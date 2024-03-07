@@ -28,9 +28,12 @@ import {
   FiMenu,
   FiBell,
   FiChevronDown,
+  FiDollarSign,
+  FiUsers,
+  FiColumns
 } from 'react-icons/fi'
 import { IconType } from 'react-icons'
-import { CiLogout } from 'react-icons/ci'
+import { CiLogout , CiDollar } from 'react-icons/ci'
 import { IoCreateOutline } from 'react-icons/io5'
 import { Link, useNavigate } from 'react-router-dom'
 import api from '../../utils/api'
@@ -59,7 +62,10 @@ interface SidebarProps extends BoxProps {
 
 const LinkItems: Array<LinkItemProps> = [
   { name: 'Home', icon: FiHome, link: "/merchant/dashboard" },
+  { name: 'Payments', icon: FiDollarSign, link: "/merchant/payment-request" },
+  { name: 'Customers', icon: FiUsers, link: "/merchant/payment-request" },
   { name: 'Payment Request', icon: IoCreateOutline, link: "/merchant/payment-request" },
+  { name: 'Report', icon: FiColumns, link: "/merchant/payment-request" },
   { name: 'Logout', icon: CiLogout, link: "/merchant/logout" },
 
 
@@ -250,7 +256,7 @@ const Sidebar = ({ children }: SidebarMainProps) => {
   }, []);
 
   return (
-    <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
+    <Box minH="100vh" bg={useColorModeValue('white.500', 'gray.900')}>
       <SidebarContent onClose={() => onClose} display={{ base: 'none', md: 'block' }} />
       <Drawer
         isOpen={isOpen}
