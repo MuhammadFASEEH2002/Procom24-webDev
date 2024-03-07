@@ -34,6 +34,17 @@ exports.merchantRegister = async (req, res) => {
             });
             return;
         }
+        const accountNumberRegex = /^\d{16}$/;
+        if (
+            !accountNumberRegex.test(req.body.accountnumber)
+        ) {
+            res.json({
+                message:
+                    "Invalid Account Number",
+                status: false,
+            });
+            return;
+        }
         const bankNameRegex = /^[A-Za-z\s\-\.,']+$/;
         if (
             !bankNameRegex.test(req.body.bankname)
@@ -110,6 +121,17 @@ exports.customerRegister = async (req, res) => {
             res.json({
                 message:
                     "Password should have minimum 8 characters. No spaces allowed and at least 1 alpahbet or letter is compulsory",
+                status: false,
+            });
+            return;
+        }
+        const accountNumberRegex = /^\d{16}$/;
+        if (
+            !accountNumberRegex.test(req.body.accountno)
+        ) {
+            res.json({
+                message:
+                    "Invalid Account Number",
                 status: false,
             });
             return;

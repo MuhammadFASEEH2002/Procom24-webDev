@@ -134,6 +134,7 @@ import {
                         customerRegister()
                       }
                     }}
+                    placeholder='Enter your full name'
                   />
                 </FormControl>
                 <FormControl >
@@ -144,6 +145,7 @@ import {
                         customerRegister()
                       }
                     }}
+                    placeholder='Enter Username'
                   />
                 </FormControl>
                 <FormControl >
@@ -154,6 +156,7 @@ import {
                         customerRegister()
                       }
                     }}
+                    placeholder='Enter Bank Name'
                   />
                 </FormControl>
                 <FormControl >
@@ -164,6 +167,8 @@ import {
                         customerRegister()
                       }
                     }}
+                    placeholder='Enter 16 digit bank account number'
+
                   />
                 </FormControl>
                 <FormControl >
@@ -174,6 +179,8 @@ import {
                         customerRegister()
                       }
                     }}
+                    placeholder='Enter Email Address'
+
                   />
                 </FormControl>
                 <FormControl >
@@ -184,6 +191,8 @@ import {
                         customerRegister()
                       }
                     }}
+                    placeholder='Enter 11 digit Phone Number starting from 03'
+
                   />
                 </FormControl>
                 <FormControl id="password">
@@ -195,6 +204,7 @@ import {
                         customerRegister()
                       }
                     }}
+                    placeholder='Enter Unique Passwords'
                   />
                 </FormControl>
                 <Stack spacing={6} textAlign={'center'} >
