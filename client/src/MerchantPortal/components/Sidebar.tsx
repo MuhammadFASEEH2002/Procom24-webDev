@@ -69,7 +69,7 @@ const LinkItems: Array<LinkItemProps> = [
   { name: 'Payments', icon: FiDollarSign, link: RoutesPath.MERCHANT_PAYMENTS, active: false },
   { name: 'Customers', icon: FiUsers, link: RoutesPath.MERCHANT_CUSTOMERS, active: false },
   { name: 'Payment Request', icon: IoCreateOutline, link: RoutesPath.MERCHANT_PAYMENT_REQUEST, active: false },
-  { name: 'Report', icon: FiColumns, link: RoutesPath.MERCHANT_REPORT, active: false },
+  // { name: 'Report', icon: FiColumns, link: RoutesPath.MERCHANT_REPORT, active: false },
   { name: 'Logout', icon: CiLogout, link: RoutesPath.MERCHANT_LOGOUT, active: false },
 ]
 

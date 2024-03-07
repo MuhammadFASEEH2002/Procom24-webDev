@@ -69,7 +69,6 @@ const MerchantDashboard = () => {
   return (
     <>
       <Sidebar active="Home" >
-
         <HStack justifyContent={'space-evenly'} my={5} >
           <StatCard colorscheme="purple" title="All Payments" recordsCount={Number(transactionCount)} amount={Number(totalAmount)} icon={<IoGrid />} />
           <StatCard colorscheme="green" title="Succeeded" recordsCount={Number(transactionCount)} amount={Number(payedAmount)} icon={<FaCheck />} />
