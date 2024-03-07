@@ -127,6 +127,7 @@ const MerchantPaymentRequest = () => {
       console.log(qr.current.innerHTML = '')
     }
     qrCode.append(qr.current)
+    qrCode.download({ name: "qr", extension: "png" });
   }
 
   return (
