@@ -21,10 +21,18 @@ exports.getMe = async (req, res) => {
 
 exports.getAllTransactions = async (req, res) => {
     try {
-        const myTransactions = await Transactions.find({ customer_id: req.user }).populate(
-            "merchant"
+        const myTransactions = await Transaction.find({ customer_id: req.user }).populate(
+            "merchant_id"
         );
-        res.json({ message: " Transactions fetched", status: true , myTransactions});
+        const modifiedTransactions = myTransactions.map(transaction => {
+            const { name, bankname } = transaction.merchant_id.toObject();
+            return {
+                name,
+                bankname,
+                ...transaction.toObject()
+            };
+        });
+        res.json({ message: " Transactions fetched", status: true , myTransactions : modifiedTransactions});
     } catch (error) {
         res.json({ message: "error", status: false });
     }

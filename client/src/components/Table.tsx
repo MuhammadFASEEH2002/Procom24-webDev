@@ -107,7 +107,7 @@ export default function JTable(props: TableProps) {
                 //@ts-ignore
                 <Td key={head}>{row[head]}</Td>
               ))}
-              {props?.isAction && (
+              {row?.status === 'pending'  && props?.isAction && (
                 <Td >
                   <Button colorScheme='teal' size={'sm'} onClick={()=> {
                     if(props?.action) props?.action('PAY', row)

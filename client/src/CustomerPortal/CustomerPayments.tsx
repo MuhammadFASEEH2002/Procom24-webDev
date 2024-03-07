@@ -6,36 +6,60 @@ import { MdCancel } from "react-icons/md";
 import { FaCheck } from "react-icons/fa";
 
 import JTable from "../components/Table"
+import { useEffect, useState } from "react";
+import api from "../utils/api";
 
 
 
-const tableHeads = ['account no', 'status', 'description', 'time', 'date', 'amount']
-const heads = ['accountNo', 'status', 'description', 'time', 'date', 'amount']
-const tableData = [
-  {
-    accountNo: '1934578934',
-    status: 'pending',
-    description: 'Payment for order 123456',
-    time: '12:29PM',
-    date: '12/12/2021',
-    amount: '$100.00',
-  },
-  {
-    accountNo: '948578',
-    status: 'approved',
-    description: 'Payment for order 24354',
-    time: '12:29PM',
-    date: '12/12/2021',
-    amount: '$100.00',
-  },
-]
+const tableHeads = ['store', 'account no', 'status', 'description', 'date', 'amount']
+const heads = ['name', 'customer_account_number', 'status', 'purpose', 'createdAt', 'amount']
+
 
 const CustomerPayments = () => {
 
 
-  const handleAction = (type: string, payload: any) => {
+  const [transactions, setTransactions] = useState([])
+
+  const handleAction = async (type: string, payload: any) => {
     console.log(type, payload)
+
+    if(type === 'PAY'){
+       const {  data } = await api.post('/api/customer/pay-transaction', { 
+        transaction_id : payload._id
+      })
+     const {status} = data
+
+     console.log(status)
+     if(status){
+     window.location.reload()
+    }
+    
+  }else{
+    const { data } = await api.post('/api/customer/reject-transaction', {
+      transaction_id: payload._id
+    })
+    const { status } = data
+    if (status) {
+        window.location.reload()
+      }
+    }
+
   }
+
+  useEffect(() => {
+    loadTransations()
+  }, [])
+
+  const loadTransations = async () => {
+    const { data } = await api.get('/api/customer/get-all-transaction')
+    const { status, myTransactions } = data
+    if (status) {
+      setTransactions([])
+      setTransactions(myTransactions)
+    }
+  }
+
+
 
   return (
     <>
@@ -48,10 +72,10 @@ const CustomerPayments = () => {
           <StatCard colorscheme="green" title="Succeeded" recordsCount={234} icon={<FaCheck />} />
           <StatCard colorscheme="red" title="Rejected" recordsCount={234} icon={<MdCancel />} />
         </HStack>
-        <JTable tableData={tableData} tableHeads={tableHeads} heads={heads} size="sm"
+        {transactions.length > 0 && <JTable tableData={transactions} tableHeads={tableHeads} heads={heads} size="sm"
           action={handleAction}
           isAction
-        />
+        />}
       </Sidebar>
     </>
   )

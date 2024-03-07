@@ -68,9 +68,9 @@ const MerchantPaymentRequest = () => {
   async function reqPayment(customerId: any) {
     console.log(customerId)
     try {
-        const { data } = await api.post('/api/merchant/payment-request', { merchantAccountNumber, customerAccountNumber, amount, purpose, customerId })
-        console.log(data)
-    
+      const { data } = await api.post('/api/merchant/payment-request', { merchantAccountNumber, customerAccountNumber, amount, purpose, customerId })
+      console.log(data)
+
     } catch (error) {
       console.log(error)
     }
@@ -142,15 +142,22 @@ const MerchantPaymentRequest = () => {
                       <FormLabel>Purpose of Payment</FormLabel>
                       <Input type='text' onChange={(event) => handleInputChange(event, setPurpose)} />
                     </Stack>
-                    <Button colorScheme='teal' onClick={reqPayment.bind(null, customerid)} >Request Payment</Button>
+                    <Button colorScheme='purple' onClick={reqPayment.bind(null, customerid)} >Request Payment</Button>
 
                   </>) : (<>
                     <HStack mb={5} >
                       <Stack width={"50%"}>
                         <FormLabel>Customer Username</FormLabel>
                         <HStack>
-                          <Input type='text' placeholder='Enter Customer Username' onChange={(event) => handleInputChange(event, setCustomerUsername)} />
-                          <Button colorScheme='purple' onClick={getData}>Fetch</Button>
+                          <Input type='text' placeholder='Enter Customer Username'
+                            onKeyPress={event => {
+                              if (event.key === 'Enter') {
+                                getData()
+                              }
+                            }}
+
+                            onChange={(event) => handleInputChange(event, setCustomerUsername)} />
+                          <Button colorScheme='purple' onClick={getData}  >Fetch</Button>
                         </HStack>
                       </Stack>
                     </HStack>
