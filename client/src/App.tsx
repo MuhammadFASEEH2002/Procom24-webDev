@@ -42,7 +42,7 @@ function App() {
           <Route path={RoutesPath.CUSTOMER_PAYMENTS} element={<CustomerPayments />} />
 
 
-          <Route path={RoutesPath.CUSTOMER_DASHBOARD} element={<CustomerDashboard />} />
+          {/* <Route path={RoutesPath.CUSTOMER_DASHBOARD} element={<CustomerDashboard />} /> */}
           <Route path={RoutesPath.CUSTOMER_LOGOUT} element={<CustomerLogout />} />
 
 

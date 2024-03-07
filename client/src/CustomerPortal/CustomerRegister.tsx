@@ -42,7 +42,7 @@ import {
       // const customerToken = cookies.customerToken;
   
       if (customerToken) {
-        navigate(RoutesPath.CUSTOMER_DASHBOARD);
+        navigate(RoutesPath.CUSTOMER_PAYMENTS);
       }
     }
     useEffect(() => {

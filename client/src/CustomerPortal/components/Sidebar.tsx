@@ -197,7 +197,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       />
 
       <HStack spacing={{ base: '0', md: '6' }}>
-        <IconButton size="lg" variant="ghost" aria-label="open menu" icon={<FiBell />} />
+        {/* <IconButton size="lg" variant="ghost" aria-label="open menu" icon={<FiBell />} /> */}
         <Flex alignItems={'center'}>
           <Menu>
             <MenuButton py={2} transition="all 0.3s" _focus={{ boxShadow: 'none' }}>
