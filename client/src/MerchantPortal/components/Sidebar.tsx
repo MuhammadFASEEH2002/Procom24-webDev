@@ -21,7 +21,8 @@ import {
   MenuDivider,
   MenuItem,
   MenuList,
-  useToast
+  useToast,
+  Image
 } from '@chakra-ui/react'
 import {
   FiHome,
@@ -85,9 +86,12 @@ const SidebarContent = ({ onClose, current, ...rest }: SidebarProps) => {
       h="full"
       {...rest}>
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-          Logo
-        </Text>
+      <Image
+        boxSize='50px'
+        objectFit='cover'
+        src='../../src/assets/logo.png'
+        alt='Dan Abramov'
+      />
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
@@ -190,13 +194,13 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         icon={<FiMenu />}
       />
 
-      <Text
-        display={{ base: 'flex', md: 'none' }}
-        fontSize="2xl"
-        fontFamily="monospace"
-        fontWeight="bold">
-        Logo
-      </Text>
+<Image
+           display={{ base: 'flex', md: 'none' }}
+        boxSize='40px'
+        objectFit='cover'
+        src='../../src/assets/logo.png'
+        alt='Dan Abramov'
+      />
 
       <HStack spacing={{ base: '0', md: '6' }}>
 
