@@ -97,6 +97,7 @@ const MerchantPaymentRequest = () => {
       }
     })
     if (qr.current) {
+      //@ts-ignore
       console.log(qr.current.innerHTML = '')
     }
     qrCode.append(qr.current)

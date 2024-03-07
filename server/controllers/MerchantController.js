@@ -111,7 +111,7 @@ exports.deleteRequest = async (req, res) => {
 exports.getMyRequests = async (req, res) => {
     try {
         const myTransactions = await Transaction.find({ merchant_id: req.user }).populate(
-            "customer"
+            "customer_id"
         );
         res.json({ message: " Transactions fetched", status: true , myTransactions});
     }
