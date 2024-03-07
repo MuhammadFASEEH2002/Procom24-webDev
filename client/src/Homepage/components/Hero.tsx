@@ -13,9 +13,7 @@ import {
 import { Link } from 'react-router-dom'
 import RoutesPath from '../../utils/routes'
 import hero_bg from '../../assets/home_hero.png'
-import { IoMdRefresh } from "react-icons/io";
-import { SlOptionsVertical } from "react-icons/sl";
-
+import ImageMockup from './Mockup'
 export default function Hero() {
     return (
         <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
@@ -62,37 +60,14 @@ export default function Hero() {
                     </Stack>
                 </Stack>
             </Flex>
-            <Flex flex={1} justify={'center'} alignItems={'center'}>
+            <Flex flex={1} justify={'center'} alignItems={'center'}
+        
+            >
                 <ImageMockup
                     img={hero_bg}
+                    url={'/merchant/dashboard'}
                 />
             </Flex>
         </Stack>
     )
-}
-
-const ImageMockup = ({ img } : any) => {
-
-    return <Stack boxShadow={'md'} height={400} pt={2} m={4}>
-        <HStack justify={'space-between'} p={2} >
-            <HStack>
-                <Stack w={5} height={5} rounded={'full'} bg={'red.400'} ></Stack>
-                <Stack w={5} height={5} rounded={'full'} bg={'yellow.400'} ></Stack>
-                <Stack w={5} height={5} rounded={'full'} bg={'green.400'} ></Stack>
-            </HStack>
-            <HStack width={'60%'} justify={'space-between'} px={5} py={1} color={'white'} mr={10} bg={'black'} rounded={7} >
-                <IoMdRefresh />
-                <Text>PayEaze.pk</Text>
-                <SlOptionsVertical />
-            </HStack>
-        </HStack>
-
-        <Image
-            alt={'Login Image'}
-            objectFit={'contain'}
-            src={img}
-            width={'100%'}
-            height={'80%'}
-        />
-    </Stack>
 }
