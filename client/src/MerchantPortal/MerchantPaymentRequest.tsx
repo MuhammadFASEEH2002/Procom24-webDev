@@ -113,7 +113,7 @@ const MerchantPaymentRequest = () => {
                         <FormLabel>Customer Username</FormLabel>
                         <HStack>
                           <Input type='text' placeholder='Enter Customer Username' onChange={(event) => handleInputChange(event, setCustomerUsername)} />
-                          <Button colorScheme='teal' onClick={getData}>Fetch</Button>
+                          <Button colorScheme='purple' onClick={getData}>Fetch</Button>
                         </HStack>
                       </Stack>
                     </HStack>
