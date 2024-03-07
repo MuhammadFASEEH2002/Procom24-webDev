@@ -10,7 +10,7 @@ import { IoTimerOutline } from "react-icons/io5";
 import { FaCheck } from "react-icons/fa";
 import api from "../utils/api.ts";
 import { useEffect, useState } from "react";
-useNavigate
+
 const MerchantDashboard = () => {
   const [totalAmount, setTotalAmount] = useState<string>("")
   const [payedAmount, setPayedAmount] = useState<string>("")
