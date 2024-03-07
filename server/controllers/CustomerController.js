@@ -18,3 +18,46 @@ exports.getMe = async (req, res) => {
         res.json({ message: "error", status: false });
     }
 }
+
+exports.getAllTransactions = async (req, res) => {
+    try {
+        const myTransactions = await Transactions.find({ customer_id: req.user }).populate(
+            "merchant"
+        );
+        res.json({ message: " Transactions fetched", status: true , myTransactions});
+    } catch (error) {
+        res.json({ message: "error", status: false });
+    }
+}
+exports.fetchTransaction = async (req, res) => {
+    try {
+        // transaction id should be given with the onClick func on pay button
+      const transaction=await Transaction.findOne({ _id: req.body.transaction_id })
+      
+        res.json({ message: " Transaction fetched", status: true , transaction});
+    } catch (error) {
+        res.json({ message: "error", status: false });
+    }
+}
+
+exports.payTransaction = async (req, res) => {
+    try {
+        // transaction id should be given with the onClick func on pay button
+        await Transaction.findByIdAndUpdate({ _id: req.body.transaction_id }, { status: "approved" })
+      
+        res.json({ message: " Payment Approved", status: true});
+    } catch (error) {
+        res.json({ message: "error", status: false });
+    }
+}
+
+exports.rejectTransaction = async (req, res) => {
+    try {
+        // transaction id should be given with the onClick func on pay button
+        await Transaction.findByIdAndUpdate({ _id: req.body.transaction_id }, { status: "rejected" })
+      
+        res.json({ message: " Payment Rejected", status: true});
+    } catch (error) {
+        res.json({ message: "error", status: false });
+    }
+}
