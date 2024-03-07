@@ -20,11 +20,14 @@ import {
   
   
   const CustomerRegister = () => {
+    const [name, setName] = useState<string>("");
     const [username, setUsername] = useState<string>("");
     const [email , setEmail] = useState<string>("");
     const [phoneNo , setPhoneNo] = useState<string>("");
     const [accountno , setAccountNo] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const [bankname, setBankname] = useState<string>("");
+
     const [loading, setLoading] = useState<boolean>(false);
     const toast = useToast()
     const navigate = useNavigate()
@@ -62,7 +65,57 @@ import {
         navigate(RoutesPath.HOME)
       }
     }
+    async function customerRegisteration() {
+      try {
+        setLoading(true);
   
+  
+        // console.log(role, email, password)
+        if (username && password && email && phoneNo && accountno && name && bankname) {
+          const response = await api.post('/api/customer/register', { name,username , password, email, phoneNo , accountno, bankname})
+          // console.log(response.data);
+          if (response.data.status) {
+            toast({
+              title: "Customer ID Created",
+              status: "success",
+              position: "top",
+              duration: 5000,
+              isClosable: true
+            })
+            navigate(RoutesPath.CUSTOMER_LOGIN)
+          } else {
+            toast({
+              title: "Auth Error",
+              description: response.data.message,
+              status: "error",
+              position: "top",
+              duration: 5000,
+              isClosable: true
+            })
+            setLoading(false);
+          }
+        } else {
+          toast({
+            title: "Empty Fields",
+            status: "error",
+            position: "top",
+            duration: 5000,
+            isClosable: true
+          })
+          setLoading(false);
+        }
+      } catch (error) {
+        toast({
+          title: "Network Error",
+  
+          status: "error",
+          position: "top",
+          duration: 5000,
+          isClosable: true
+        })
+        navigate(RoutesPath.HOME)
+      }
+    }
     return (
       <>
         {loading ? (<>
@@ -74,8 +127,28 @@ import {
               <Stack spacing={4} w={'full'} maxW={'md'}>
                 <Heading fontSize={'2xl'}>Register New Customer Account</Heading>
                 <FormControl >
+                  <FormLabel>Full Name</FormLabel>
+                  <Input type="text" onChange={(event) => handleInputChange(event, setName)}
+                    onKeyPress={event => {
+                      if (event.key === 'Enter') {
+                        customerRegister()
+                      }
+                    }}
+                  />
+                </FormControl>
+                <FormControl >
                   <FormLabel>Username</FormLabel>
                   <Input type="text" onChange={(event) => handleInputChange(event, setUsername)}
+                    onKeyPress={event => {
+                      if (event.key === 'Enter') {
+                        customerRegister()
+                      }
+                    }}
+                  />
+                </FormControl>
+                <FormControl >
+                  <FormLabel>Bank Name</FormLabel>
+                  <Input type="text" onChange={(event) => handleInputChange(event, setBankname)}
                     onKeyPress={event => {
                       if (event.key === 'Enter') {
                         customerRegister()
@@ -125,7 +198,7 @@ import {
                   />
                 </FormControl>
                 <Stack spacing={6} textAlign={'center'} >
-                  <Button colorScheme={'blue'} variant={'solid'} onClick={customerRegister}>
+                  <Button colorScheme={'blue'} variant={'solid'} onClick={()=>{customerRegisteration()}}>
                     Register
                   </Button>
                   <Link to={RoutesPath.CUSTOMER_LOGIN}>
