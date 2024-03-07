@@ -34,6 +34,9 @@ router.get('/customer/get-me', verifyCustomerToken, CustomerController.getMe)
 router.get('/customer/get-all-transaction', verifyCustomerToken, CustomerController.getAllTransactions)
 router.post('/customer/pay-transaction', verifyCustomerToken, CustomerController.payTransaction)
 router.post('/customer/reject-transaction', verifyCustomerToken, CustomerController.rejectTransaction)
+router.post('/customer/reject-transaction', verifyCustomerToken, CustomerController.rejectTransaction)
+router.get('/customer/get-stats', verifyCustomerToken, CustomerController.getStats)
+
 
 
 

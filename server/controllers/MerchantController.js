@@ -155,32 +155,34 @@ exports.exportPayments = async (req, res) => {
 }
 
 exports.getStats=async (req,res)=>{
-    const allTransactions = await Transaction.find({ merchant_id: req.user })
-    const totalTransactions = await Transaction.countDocuments({ merchant_id: req.user })
-
-    // const allTransactions = await Transaction.find({ merchant_id: req.user })
-    let totalAmount=0
-    let payedAmount=0
-    let rejectAmount=0
-    let pendingAmount=0
-
-    await allTransactions.map(transaction=>{totalAmount=parseInt(transaction.amount)+totalAmount})
-    await allTransactions.map(transaction=>{
-        if(transaction.status=="approved"){
-            payedAmount=parseInt(transaction.amount)+payedAmount
-        }
-        else if(transaction.status=="rejected"){
-            rejectAmount=parseInt(transaction.amount)+rejectAmount
-        }
-        else if(transaction.status=="pending"){
-            pendingAmount=parseInt(transaction.amount)+pendingAmount
-        }
-        }
+    try {
+        const allTransactions = await Transaction.find({ merchant_id: req.user })
+        const totalTransactions = await Transaction.countDocuments({ merchant_id: req.user })
+    
+        // const allTransactions = await Transaction.find({ merchant_id: req.user })
+        let totalAmount=0
+        let payedAmount=0
+        let rejectAmount=0
+        let pendingAmount=0
+    
+        await allTransactions.map(transaction=>{totalAmount=parseInt(transaction.amount)+totalAmount})
+        await allTransactions.map(transaction=>{
+            if(transaction.status=="approved"){
+                payedAmount=parseInt(transaction.amount)+payedAmount
+            }
+            else if(transaction.status=="rejected"){
+                rejectAmount=parseInt(transaction.amount)+rejectAmount
+            }
+            else if(transaction.status=="pending"){
+                pendingAmount=parseInt(transaction.amount)+pendingAmount
+            }
+            }
+            )
+    
+        res.json({  status: true , totalAmount, payedAmount, rejectAmount, pendingAmount, totalTransactions});
+    } catch (error) {
+        res.json({ message: error.message, status: false });
         
-        )
-
-
-    res.json({  status: true , totalAmount, payedAmount, rejectAmount, pendingAmount, totalTransactions});
-
-
+    }
+   
 }
