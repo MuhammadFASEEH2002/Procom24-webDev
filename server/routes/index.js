@@ -16,8 +16,6 @@ router.post('/customer/register', AuthController.customerRegister)
 router.post('/customer/login', AuthController.customerLogin)
 
 
-
-
 // merchant routes
 router.get('/merchant/get-me', verifyMerchantToken, MerchantController.getMe)
 router.get('/merchant/get-all-customer-data', verifyMerchantToken, MerchantController.getAllCustomers)
@@ -26,7 +24,6 @@ router.post('/merchant/payment-request', verifyMerchantToken, MerchantController
 router.post('/merchant/edit-payment-request', verifyMerchantToken, MerchantController.editRequest)
 router.post('/merchant/delete-payment-request', verifyMerchantToken, MerchantController.deleteRequest)
 router.get('/merchant/get-my-payment-requests', verifyMerchantToken, MerchantController.getMyRequests)
-
 
 
 // customer routes
