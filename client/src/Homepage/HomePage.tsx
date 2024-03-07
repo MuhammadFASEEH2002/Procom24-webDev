@@ -13,12 +13,6 @@ const Homepage = () => {
   return (
     <>
       <Navbar></Navbar>
-      {/* <Link to={"/merchant/login"}>
-    <Button>Merchant</Button>
-    </Link>
-    <Link to={"/customer/login"}>
-    <Button>Customer</Button>
-    </Link> */}
       <Container maxW={'5xl'}>
         <Stack
           textAlign={'center'}
@@ -34,22 +28,24 @@ const Homepage = () => {
               Made Easy
             </Text>
           </Heading>
-          <Text color={'gray.500'} maxW={'3xl'}>
-            Never miss a meeting. Never be late for one too. Keep track of your meetings and
-            receive smart reminders in appropriate times. Read your smart “Daily Agenda”
-            every morning.
+          <Text color={'gray.500'} maxW={'xl'}>
+         PayEaze makes it easier for merchants and customers to make their payments in one go. Sign up today and explore.
           </Text>
           <Stack spacing={6} direction={'row'}>
+          <Link to={"/customer/login"}>
           <Button rounded={'full'} px={6} bg={"purple.300"}   _hover={{ bg: 'purple.500' }} color={"white"}>
               Customer
             </Button>
+            </Link>
+            <Link to={"/merchant/login"}>
             <Button rounded={'full'} px={6} bg={"purple.500"}   _hover={{ bg: 'purple.600' }} color={"white"}>
               Merchant
             </Button>
+            </Link>
           </Stack>
-          <Flex w={'full'}>
+          <Flex w={'full'} alignItems={"center"} justifyContent={"center"} >
             {/* <Illustration height={{ sm: '24rem', lg: '28rem' }} mt={{ base: 12, sm: 16 }} /> */}
-            <Image src='../../src/assets/ani'></Image>
+            <Image src='../../src/assets/card_animation.gif' boxSize={"300px"}></Image>
           </Flex>
         </Stack>
       </Container>

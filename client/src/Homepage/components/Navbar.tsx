@@ -9,7 +9,8 @@ import {
     PopoverTrigger,
     PopoverContent,
     useColorModeValue,
-    useColorMode
+    useColorMode,
+    Image
   } from '@chakra-ui/react'
   import {
     ChevronRightIcon,
@@ -41,7 +42,9 @@ import {
           </Flex>
           <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
   
-          <SiTestcafe size={30} />
+         
+          <Image src='../../src/assets/logo.png' boxSize={"50px"}></Image>
+
   
             <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
               <DesktopNav />
