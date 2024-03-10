@@ -1,6 +1,6 @@
 #PayEaze
 #client
-<p>Install node modules: npm i or yarn add</p>
+<p>Install node modules: npm i or yarn install</p>
 <p>create .env</p>
 <p>To start the development server: npm run dev</p>
 #server
